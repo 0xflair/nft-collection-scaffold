@@ -1,0 +1,106 @@
+module.exports = {
+  settings: {
+    width: 600,
+    height: 600,
+  },
+  traits: {
+    Accessory: {
+      Pearl: {
+        layerImage: 'assets/layers/Accessory/Pearl.png',
+        probabilityPercent: 5,
+        overlayIndex: 1,
+      },
+      'Scuba Mask': {
+        layerImage: 'assets/layers/Accessory/Scuba Mask.png',
+        probabilityPercent: 8,
+        overlayIndex: 5,
+      },
+      'Bamboo Flute': {
+        layerImage: 'assets/layers/Accessory/Bamboo Flute.png',
+        probabilityPercent: 10,
+        overlayIndex: 1,
+      },
+      'Life Ring': {
+        layerImage: 'assets/layers/Accessory/Message In A Bottle.png',
+        probabilityPercent: 15,
+        overlayIndex: 1,
+      },
+      'Message In A Bottle': {
+        layerImage: 'assets/layers/Accessory/Life Ring.png',
+        probabilityPercent: 20,
+        overlayIndex: 1,
+      },
+      None: {
+        noImage: true,
+        probabilityPercent: 42,
+        overlayIndex: 1,
+      },
+    },
+    Base: {
+      Goldfish: {
+        layerImage: 'assets/layers/Base/Goldfish.png',
+        probabilityPercent: 10,
+        overlayIndex: 2,
+      },
+      Starfish: {
+        layerImage: 'assets/layers/Base/Starfish.png',
+        probabilityPercent: 20,
+        overlayIndex: 2,
+      },
+      Crab: {
+        layerImage: 'assets/layers/Base/Narwhal.png',
+        probabilityPercent: 30,
+        overlayIndex: 2,
+      },
+      Narwhal: {
+        layerImage: 'assets/layers/Base/Narwhal.png',
+        probabilityPercent: 40,
+        overlayIndex: 2,
+      },
+    },
+    Eyes: {
+      Wink: {
+        layerImage: 'assets/layers/Eyes/Wink.png',
+        probabilityPercent: 10,
+        overlayIndex: 3,
+      },
+      Content: {
+        layerImage: 'assets/layers/Eyes/Content.png',
+        probabilityPercent: 20,
+        overlayIndex: 3,
+      },
+      Joy: {
+        layerImage: 'assets/layers/Eyes/Joy.png',
+        probabilityPercent: 30,
+        overlayIndex: 3,
+      },
+      Big: {
+        layerImage: 'assets/layers/Eyes/Big.png',
+        probabilityPercent: 40,
+        overlayIndex: 3,
+      },
+    },
+    Mouth: {
+      Surprised: {
+        layerImage: 'assets/layers/Mouth/Surprised.png',
+        probabilityPercent: 10,
+        overlayIndex: 4,
+      },
+      Smirk: {
+        layerImage: 'assets/layers/Mouth/Smirk.png',
+        probabilityPercent: 20,
+        overlayIndex: 4,
+      },
+      Cute: {
+        layerImage: 'assets/layers/Mouth/Cute.png',
+        probabilityPercent: 30,
+        overlayIndex: 4,
+      },
+      Happy: {
+        layerImage: 'assets/layers/Mouth/Happy.png',
+        probabilityPercent: 40,
+        overlayIndex: 4,
+      },
+    },
+  },
+};

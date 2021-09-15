@@ -24,8 +24,8 @@ You only need to provide your assets, rarity traits,then you're ready to launch 
 # Usage
 
 ## 1. Clone this repo and prepare the configs
-* Copy the `.env.template` file to a file named `.env`, and then edit it to fill in the details. Enter your Etherscan API key, your Infura Access Key, and the private key of the account which will send the deployment transaction.
-* Copy `contracts/VisionaryTycoonsSociety.sol` to your collection name, and update the details inside.
+* Copy the `.env.dist` file to a file named `.env`, and then edit it to fill in the details. Enter your Etherscan API key, your Infura Access Key, and the private key of the account which will send the deployment transaction.
+* Copy `collection.config.js.dist` to a file named `collection.config.js`, then update the details based on your collection info.
 
 ## 2. Prepare your avatar assets, rarity traits and collection metadata
 TODO

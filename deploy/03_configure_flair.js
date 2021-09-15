@@ -56,7 +56,7 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
 
   console.log(` - Allowing Flair to fund NFTs for this collection...`);
   await deployments.execute(
-    'VisionaryTycoonsSociety',
+    'ERC721Collection',
     { from: deployer },
     'grantRole',
     web3.utils.soliditySha3('MINTER_ROLE'),
@@ -64,5 +64,5 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
   );
 };
 
-module.exports.tags = ['configure'];
+module.exports.tags = ['flair'];
 module.exports.dependencies = [];

@@ -1,0 +1,56 @@
+require('dotenv').config();
+const web3 = require('web3');
+
+module.exports = {
+  // Name of the collection shown in EtherScan and OpenSea
+  name: 'MiniSea Creatures',
+
+  // Name of the collection shown in EtherScan and OpenSea
+  nftTitlePrefix: 'Mini Creature',
+
+  // Description of collection stored in contract-level metadata shown in OpenSea
+  description:
+    'A collection of 100 randomly generated sea creatures inspired by OpenSea Creatures art.',
+
+  // Token tracker symbol shown in EtherScan
+  symbol: 'MSC',
+
+  // Price of minting via Direct Purchase
+  price: web3.utils.toWei('0.08'), // ETH
+
+  // Total number of tokens in your collection
+  maxTotalMint: 100,
+
+  // Number of pre-sale mints possible for each allow-listed address
+  maxPreSaleMintPerAddress: 2,
+
+  // Number of mints possible on each transaction
+  maxMintPerTransaction: 10,
+
+  // Maximum allowed gas fee to prevent gas wars in gwei (0 = disabled)
+  maxAllowedGasFee: 0,
+
+  // Primary image of collection stored in contract-level metadata shown in OpenSea
+  collectionImage: 'assets/contract/image.png',
+
+  // Image (or gif) for NFT placeholders before the reveal
+  unrevealedPlaceholder: 'assets/contract/placeholder.png',
+
+  // Website of collection stored in contract-level metadata shown in OpenSea
+  externalLink: 'https://flair.finance',
+
+  // Royalty fee for secondary sales (on Rarible and OpenSea)
+  royaltyFee: 250, // Indicates a 2.5% seller fee.
+
+  // Receiver of the royalty fees
+  royaltyFeeRecipient: process.env.ROYALTY_FEE_RECIPIENT,
+
+  // OpenSea registry address to avoid additional approval when collectors want to list on OS
+  //   - Registry address on Ethereum Mainnet: 0xa5409ec958c83c3f309868babaca7c86dcb077c1
+  //   - Registry address on Ethereum Rinkeby: 0xF57B2c51dED3A29e6891aba85459d600256Cf317
+  openseaRegistryAddress: process.env.OPENSEA_REGISTRY_ADDRESS,
+
+  // Pinata API and Secret Keys to upload and pin metadata for NFTs and contract (you must edit .env file)
+  pinataApiKey: process.env.PINATA_API_KEY,
+  pinataSecretKey: process.env.PINATA_SECRET_KEY,
+};

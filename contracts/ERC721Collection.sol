@@ -17,7 +17,7 @@ import "./rarible/IRoyalties.sol";
 import "./rarible/LibPart.sol";
 import "./rarible/LibRoyaltiesV2.sol";
 
-contract BaseCollection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
+contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
     using SafeMath for uint256;
     using Address for address;
     using Address for address payable;
@@ -35,9 +35,9 @@ contract BaseCollection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessCon
     bool private _isPreSaleActive;
     bool private _isPublicSaleActive;
     bool private _isPurchaseEnabled;
+    string private _contractURI;
     string private _placeholderURI;
     string private _baseTokenURI;
-    string private _contractURI;
     address private _raribleRoyaltyAddress;
     address private _openSeaProxyRegistryAddress;
 
@@ -54,6 +54,7 @@ contract BaseCollection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessCon
         uint256 maxPreSaleMintPerAddress,
         uint256 maxMintPerTransaction,
         uint256 maxAllowedGasFee,
+        string memory contractURI,
         string memory placeholderURI,
         address raribleRoyaltyAddress,
         address openSeaProxyRegistryAddress
@@ -64,6 +65,7 @@ contract BaseCollection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessCon
         MAX_MINT_PER_TRANSACTION = maxMintPerTransaction;
         MAX_ALLOWED_GAS_FEE = maxAllowedGasFee;
 
+        _contractURI = contractURI;
         _placeholderURI = placeholderURI;
         _raribleRoyaltyAddress = raribleRoyaltyAddress;
         _openSeaProxyRegistryAddress = openSeaProxyRegistryAddress;
@@ -90,6 +92,10 @@ contract BaseCollection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessCon
         _baseTokenURI = baseURI;
     }
 
+    function setPlaceholderURI(string memory placeholderURI) external onlyOwner {
+        _placeholderURI = placeholderURI;
+    }
+
     function setContractURI(string memory uri) external onlyOwner {
         _contractURI = uri;
     }
@@ -104,6 +110,12 @@ contract BaseCollection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessCon
 
     function setOpenSeaProxyRegistryAddress(address addr) external onlyOwner {
         _openSeaProxyRegistryAddress = addr;
+    }
+
+    function withdraw() external override onlyOwner {
+        uint256 balance = address(this).balance;
+
+        payable(msg.sender).transfer(balance);
     }
 
     // PUBLIC

@@ -3,7 +3,7 @@ const { v4: uuid } = require('uuid');
 const web3 = require('web3');
 const { setupTest } = require('../setup');
 
-describe('BaseCollection', () => {
+describe('ERC721Collection', () => {
   it('should correctly set contract uri', async () => {
     const { deployer } = await setupTest();
 

@@ -1,6 +1,11 @@
 node_modules
-.env
 
-#Hardhat files
+# Scaffold files
+.env
+collection.config.js
+blueprint.config.js
+dist
+
+# Hardhat files
 cache
 artifacts

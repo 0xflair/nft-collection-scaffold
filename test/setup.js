@@ -10,7 +10,7 @@ const setupTest = deployments.createFixture(
 
     await deployments.fixture();
 
-    await deployments.deploy('BaseCollection', {
+    await deployments.deploy('ERC721Collection', {
       from: deployer,
       args: [
         'Test Collection',
@@ -31,15 +31,15 @@ const setupTest = deployments.createFixture(
     return {
       deployer: {
         signer: await ethers.getSigner(deployer),
-        testCollection: await ethers.getContract('BaseCollection', deployer),
+        testCollection: await ethers.getContract('ERC721Collection', deployer),
       },
       userA: {
         signer: await ethers.getSigner(accounts[0]),
-        testCollection: await ethers.getContract('BaseCollection', accounts[0]),
+        testCollection: await ethers.getContract('ERC721Collection', accounts[0]),
       },
       userB: {
         signer: await ethers.getSigner(accounts[1]),
-        testCollection: await ethers.getContract('BaseCollection', accounts[1]),
+        testCollection: await ethers.getContract('ERC721Collection', accounts[1]),
       },
     };
   },
