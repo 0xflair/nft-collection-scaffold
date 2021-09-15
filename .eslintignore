@@ -1,4 +1,11 @@
+dist
 node_modules
-artifacts
-cache
 coverage
+.terraform
+terraform.tfstate
+terraform.tfstate*
+allure-results
+allure-report
+_ignore.*
+test/integration/*
+test/utils/*

@@ -1,43 +1,116 @@
-require("dotenv").config();
+require('dotenv').config();
 
-require("@nomiclabs/hardhat-etherscan");
-require("@nomiclabs/hardhat-waffle");
-require("hardhat-gas-reporter");
-require("solidity-coverage");
-
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
+require('hardhat-deploy');
+require('@nomiclabs/hardhat-waffle');
+require('@nomiclabs/hardhat-ethers');
+require('@nomiclabs/hardhat-etherscan');
+require('solidity-coverage');
+require('hardhat-contract-sizer');
+require('hardhat-gas-reporter');
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
+
+const {
+  INFURA_PROJECT_ID,
+  DEPLOYER_PRIVATE_KEY,
+  ETHERSCAN_API_KEY,
+  GAS_PRICE,
+  COIN_MARKET_CAP_API_KEY,
+} = process.env;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: {
+    version: '0.8.3',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 10,
+      },
+    },
+  },
+  defaultNetwork: 'hardhat',
   networks: {
     hardhat: {
-      initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
+      gas: 12000000,
+      blockGasLimit: 0x1fffffffffffff,
+      allowUnlimitedContractSize: true,
+      timeout: 1800000,
     },
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    localhost: {
+      url: `http://127.0.0.1:8545`,
+      network_id: '*',
+      gas: 12000000,
+      blockGasLimit: 0x1fffffffffffff,
+      allowUnlimitedContractSize: true,
+      timeout: 1800000,
+    },
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
+      network_id: '*',
+      gasPrice: GAS_PRICE && parseInt(GAS_PRICE),
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+    bsc_testnet: {
+      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+      chainId: 97,
+      gasPrice: GAS_PRICE && parseInt(GAS_PRICE),
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
+      network_id: '*',
+      gasPrice: GAS_PRICE && parseInt(GAS_PRICE),
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+    matic: {
+      url: `https://polygon-mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+    mumbai: {
+      // url: `https://polygon-mumbai.infura.io/v3/${INFURA_PROJECT_ID}`,
+      url: `https://matic-mumbai.chainstacklabs.com/`,
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+    arb_rinkeby: {
+      url: 'https://rinkeby.arbitrum.io/rpc',
+      gasPrice: 0,
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+  },
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: ETHERSCAN_API_KEY,
+  },
+  contractSizer: {
+    alphaSort: false,
+    runOnCompile: false,
+    disambiguatePaths: false,
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0,
     },
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    coinmarketcap: COIN_MARKET_CAP_API_KEY,
+    currency: 'USD',
+    enabled: true,
   },
 };

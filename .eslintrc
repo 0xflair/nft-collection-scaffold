@@ -1,0 +1,26 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2019
+  },
+  "plugins": [
+    "simple-import-sort",
+    "import"
+  ],
+  "extends": [
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "root": true,
+  "env": {
+    "browser": false,
+    "es2021": true,
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error"
+  }
+}
