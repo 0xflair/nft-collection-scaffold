@@ -112,7 +112,7 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
         _openSeaProxyRegistryAddress = addr;
     }
 
-    function withdraw() external override onlyOwner {
+    function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
 
         payable(msg.sender).transfer(balance);
@@ -230,6 +230,22 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
             uint256 newTokenId = _getNextTokenId();
             _safeMint(msg.sender, newTokenId);
             _incrementTokenId();
+        }
+    }
+
+    /**
+     * Useful for when user wants to return tokens to get a refund,
+     * or when they want to transfer lots of tokens by paying gas fee only once.
+     */
+    function transferFromBulk(
+        address from,
+        address to,
+        uint256[] memory tokenIds
+    ) public virtual {
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            //solhint-disable-next-line max-line-length
+            require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
+            _transfer(from, to, tokenIds[i]);
         }
     }
 
