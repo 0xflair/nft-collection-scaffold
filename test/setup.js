@@ -21,6 +21,7 @@ const setupTest = deployments.createFixture(
         10, // Max mint per transaction
         100, // Max allowed gas fee in gwei (0 = disabled)
         'ipfs://contract-metadata-test-uri',
+        'ipfs://placeholder-metadata-uri',
         deployer, // Rarible royalty beneficiary
         '0x0000000000000000000000000000000000000000',
       ],
@@ -35,11 +36,17 @@ const setupTest = deployments.createFixture(
       },
       userA: {
         signer: await ethers.getSigner(accounts[0]),
-        testCollection: await ethers.getContract('ERC721Collection', accounts[0]),
+        testCollection: await ethers.getContract(
+          'ERC721Collection',
+          accounts[0],
+        ),
       },
       userB: {
         signer: await ethers.getSigner(accounts[1]),
-        testCollection: await ethers.getContract('ERC721Collection', accounts[1]),
+        testCollection: await ethers.getContract(
+          'ERC721Collection',
+          accounts[1],
+        ),
       },
     };
   },

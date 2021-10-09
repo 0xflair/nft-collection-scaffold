@@ -202,6 +202,10 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
         // Make sure minting is allowed
         requireMintingConditions(to, count);
 
+        if (_isPreSaleActive) {
+            _preSaleAllowListClaimed[msg.sender] += count;
+        }
+
         for (uint256 i = 0; i < count; i++) {
             uint256 newTokenId = _getNextTokenId();
             _safeMint(to, newTokenId);
@@ -225,6 +229,10 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
 
         // Sent value matches required ETH amount
         require(PRICE * count <= msg.value, 'BASE_COLLECTION/INSUFFICIENT_ETH_AMOUNT');
+
+        if (_isPreSaleActive) {
+            _preSaleAllowListClaimed[msg.sender] += count;
+        }
 
         for (uint256 i = 0; i < count; i++) {
             uint256 newTokenId = _getNextTokenId();

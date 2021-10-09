@@ -21,7 +21,7 @@ async function uploadMetadataToIPFS() {
 uploadMetadataToIPFS()
   .then((result) => {
     console.log(
-      `# Successfully uploaded metadata files to IPFS with hash: ${result}`,
+      `# Successfully uploaded metadata files to IPFS: ipfs://${result}/`,
     );
   })
   .catch((error) => {

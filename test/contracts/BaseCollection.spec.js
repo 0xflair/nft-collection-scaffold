@@ -57,4 +57,27 @@ describe('ERC721Collection', () => {
       userA.signer.address,
     );
   });
+
+  it('should not be able to mint more than allowed pre-sale limit', async () => {
+    const { userA, deployer } = await setupTest();
+
+    await deployer.testCollection.togglePublicSale(false);
+    await deployer.testCollection.togglePreSale(true);
+    await deployer.testCollection.togglePurchaseEnabled(true);
+    await deployer.testCollection.addToPreSaleAllowList([userA.signer.address]);
+
+    await userA.testCollection.purchase(2, {
+      value: web3.utils.toWei('0.16'),
+    });
+
+    expect(await userA.testCollection.balanceOf(userA.signer.address)).to.equal(
+      2,
+    );
+
+    await expect(
+      userA.testCollection.purchase(1, {
+        value: web3.utils.toWei('0.08'),
+      }),
+    ).to.be.revertedWith('BASE_COLLECTION/CANNOT_MINT');
+  });
 });
