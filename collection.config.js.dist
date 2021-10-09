@@ -2,6 +2,9 @@ require('dotenv').config();
 const web3 = require('web3');
 
 module.exports = {
+  // Collection contract file
+  contract: 'SampleCreatures',
+
   // Name of the collection shown in EtherScan and OpenSea
   name: 'MiniSea Creatures',
 

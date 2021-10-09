@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const pinataSDK = require('@pinata/sdk');
 
-const blueprint = require('../blueprint.config');
 const collectionConfig = require('../collection.config');
 
 const pinata = pinataSDK(

@@ -15,7 +15,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     .readFileSync(`${distDirectory}/.placeholderURI`)
     .toString();
 
-  await deployments.deploy('ERC721Collection', {
+  await deployments.deploy(collectionConfig.contract, {
     from: deployer,
     args: [
       collectionConfig.name,

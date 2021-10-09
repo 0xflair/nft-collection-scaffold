@@ -1,0 +1,181 @@
+
+# MouthPieces
+
+find . -name '*png' | grep 'MouthPeices-0015' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Gold-Grill.0_833.png'
+find . -name '*png' | grep 'MouthPeices-0016' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Bone.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0017' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Lilly.3_750.png'
+find . -name '*png' | grep 'MouthPeices-0018' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Frizbee.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0019' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Burp.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0020' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/E-Cigarette.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0021' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pacifier.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0022' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cigerette-Stick.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0023' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Whistle.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0024' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Vape.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0025' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Party-Popper.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0026' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Blunt.3_750.png'
+find . -name '*png' | grep 'MouthPeices-0027' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Joint.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0028' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pipe.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0029' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Rose.0_833.png'
+find . -name '*png' | grep 'MouthPeices-0030' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pizza.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0031' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Spaghetti.3_750.png'
+find . -name '*png' | grep 'MouthPeices-0032' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Kazoo.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0033' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Wheat.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0034' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cigarette.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0035' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Knife.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0036' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Donkey-Teeth.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0037' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cigar.0_833.png'
+find . -name '*png' | grep 'MouthPeices-0038' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Hotlips.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0039' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Thermometer.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0040' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Gold-Mouth.0_833.png'
+find . -name '*png' | grep 'MouthPeices-0041' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Gaping-Maw.3_750.png'
+find . -name '*png' | grep 'MouthPeices-0042' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Smiley-Grin.3_750.png'
+find . -name '*png' | grep 'MouthPeices-0043' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Poor-Sucker.0_833.png'
+find . -name '*png' | grep 'MouthPeices-0044' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Lollypop-Stick.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0045' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Full-Cog.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0046' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Tooth-Pick.2_778.png'
+find . -name '*png' | grep 'MouthPeices-0047' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Teeth-Grit.3_750.png'
+find . -name '*png' | grep 'MouthPeices-0048' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Bubblegum.1_875.png'
+find . -name '*png' | grep 'MouthPeices-0049' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Raspberry.2_778.png'
+
+
+# Skins
+
+find . -name '*png' | grep 'Skin-1' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Grey-Brown.12_5.png'
+find . -name '*png' | grep 'Skin-2' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cream.12_5.png'
+find . -name '*png' | grep 'Skin-3' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Rusty.12_5.png'
+find . -name '*png' | grep 'Skin-4' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Chocolate.12_5.png'
+find . -name '*png' | grep 'Skin-5' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Grey-Blue.7_5.png'
+find . -name '*png' | grep 'Skin-6' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Green.10.png'
+find . -name '*png' | grep 'Skin-7' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pink.10.png'
+find . -name '*png' | grep 'Skin-8' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Purple.10.png'
+find . -name '*png' | grep 'Skin-9' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Blue-Grey.7_5.png'
+find . -name '*png' | grep 'Skin-ORIG' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Original.5.png'
+
+
+find . -name '*png' | grep 'Skins-1' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Grey-Brown.12_5.png'
+find . -name '*png' | grep 'Skins-2' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cream.12_5.png'
+find . -name '*png' | grep 'Skins-3' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Rusty.12_5.png'
+find . -name '*png' | grep 'Skins-4' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Chocolate.12_5.png'
+find . -name '*png' | grep 'Skins-5' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Grey-Blue.7_5.png'
+find . -name '*png' | grep 'Skins-6' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Green.10.png'
+find . -name '*png' | grep 'Skins-7' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pink.10.png'
+find . -name '*png' | grep 'Skins-8' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Purple.10.png'
+find . -name '*png' | grep 'Skins-9' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Blue-Grey.7_5.png'
+find . -name '*png' | grep 'Skins-ORIG' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Original.5.png'
+
+
+
+# Diorama Base
+
+find . -name '*png' | grep 'BASE-0010' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Brick-Road.12_5.png'
+find . -name '*png' | grep 'BASE-0011' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Sidewalk.15.png'
+find . -name '*png' | grep 'BASE-0012' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/The-Docks.7_5.png'
+find . -name '*png' | grep 'BASE-0013' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Candy-Lane.2_5.png'
+find . -name '*png' | grep 'BASE-0014' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cobblestone-Path.12_5.png'
+find . -name '*png' | grep 'BASE-0015' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Diner-Tile.12_5.png'
+find . -name '*png' | grep 'BASE-0016' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pub-Wood-Floor.12_5.png'
+find . -name '*png' | grep 'BASE-0017' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Mall-Wizard-Tile.15.png'
+find . -name '*png' | grep 'BASE-0018' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Lazer-Tag-Carpet.2_5.png'
+find . -name '*png' | grep 'BASE-0019' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Haunted-House-Wood.7_5.png'
+
+
+
+# Diorama Left
+
+find . -name '*png' | grep 'BG-Prop-L-0010' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Stop-Sign.12_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0011' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Sandwich-Board.12_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0012' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Treasure-Chest.15.png'
+find . -name '*png' | grep 'BG-Prop-L-0013' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pie-Stand.12_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0014' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Liquor-Store.7_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0015' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Diner-Tale-Puzzlers.2_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0016' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pub-PostIt-Board.12_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0017' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Wizard-Day-Meet.15.png'
+find . -name '*png' | grep 'BG-Prop-L-0018' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Carboard-Biome.7_5.png'
+find . -name '*png' | grep 'BG-Prop-L-0019' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Caring-Cthulu-Portal.2_5.png'
+
+# Diorama Right
+
+find . -name '*png' | grep 'BG-Prop-R-0010' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Garbage-Can.12_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0011' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Bus-Stop-Bike.12_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0012' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Wooden-Lantern.15.png'
+find . -name '*png' | grep 'BG-Prop-R-0013' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Candy-Flowers.2_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0014' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Squid-Fountain.7_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0015' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Bacon-Register.12_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0016' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Dart-On-Dartboard.15.png'
+find . -name '*png' | grep 'BG-Prop-R-0017' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Shiney-Shoops-Stand.12_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0018' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Flamingo-Lazertag.2_5.png'
+find . -name '*png' | grep 'BG-Prop-R-0019' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Medusa-Coffin.7_5.png'
+
+
+
+# Glasses
+
+find . -name '*png' | grep 'Glasses-0010' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Nigh-Vision-Goggles.1_67.png'
+find . -name '*png' | grep 'Glasses-0011' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Red-Round.6_25.png'
+find . -name '*png' | grep 'Glasses-0012' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Black-Rimed-Metal.6.png'
+find . -name '*png' | grep 'Glasses-0013' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/New-Years-2030.3_75.png'
+find . -name '*png' | grep 'Glasses-0014' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Stars.6.png'
+find . -name '*png' | grep 'Glasses-0015' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Hearts.6_25.png'
+find . -name '*png' | grep 'Glasses-0016' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Blinds.6.png'
+find . -name '*png' | grep 'Glasses-0017' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Tech-Visor.3_75.png'
+find . -name '*png' | grep 'Glasses-0018' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Sweet-Stripes.6.png'
+find . -name '*png' | grep 'Glasses-0019' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Windows.6_25.png'
+find . -name '*png' | grep 'Glasses-0020' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Opera.6_25.png'
+find . -name '*png' | grep 'Glasses-0021' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Windshield-Wipers.1_67.png'
+find . -name '*png' | grep 'Glasses-0022' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Aviators.6_25.png'
+find . -name '*png' | grep 'Glasses-0023' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Workshop-Goggles.6.png'
+find . -name '*png' | grep 'Glasses-0024' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Ski-Goggles.6_25.png'
+find . -name '*png' | grep 'Glasses-0025' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Slit-Shades.1_67.png'
+find . -name '*png' | grep 'Glasses-0026' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Professor-Glasses.6_25.png'
+find . -name '*png' | grep 'Glasses-0027' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Nerd-Tape.3_75.png'
+find . -name '*png' | grep 'Glasses-0028' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Distinguished.3_75.png'
+find . -name '*png' | grep 'Glasses-0029' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cool-Shades.6_25.png'
+
+
+
+# Ears
+
+find . -name '*png' | grep 'Ears' | grep 'Blue-Grey' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Blue-Grey.7_5.Skin:Blue-Grey.png'
+find . -name '*png' | grep 'Ears' | grep 'Chocolate' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Chocolate.12_5.Skin:Chocolate.png'
+find . -name '*png' | grep 'Ears' | grep 'Cream' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Cream.12_5.Skin:Cream.png'
+find . -name '*png' | grep 'Ears' | grep 'Green' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Green.10.Skin:Green.png'
+find . -name '*png' | grep 'Ears' | grep 'Grey-Blue' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Grey-Blue.7_5.Skin:Grey-Blue.png'
+find . -name '*png' | grep 'Ears' | grep 'Grey-Brown' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Grey-Brown.12_5.Skin:Grey-Brown.png'
+find . -name '*png' | grep 'Ears' | grep 'Original' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Original.5.Skin:Original.png'
+find . -name '*png' | grep 'Ears' | grep 'Pink' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Pink.10.Skin:Pink.png'
+find . -name '*png' | grep 'Ears' | grep 'Purple' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Purple.10.Skin:Purple.png'
+find . -name '*png' | grep 'Ears' | grep 'Rusty' | xargs -n1 -I {} bash -c 'mv {} $(dirname {})/Rusty.12_5.Skin:Rusty.png'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

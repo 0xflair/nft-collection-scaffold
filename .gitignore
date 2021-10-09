@@ -3,8 +3,11 @@ node_modules
 # Scaffold files
 .env
 collection.config.js
-blueprint.config.js
+blueprint.config.json
 dist
+assets
+contracts\/collections\/*
+!contracts\/collections\/SampleCreatures.sol
 
 # Hardhat files
 cache

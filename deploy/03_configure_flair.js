@@ -19,7 +19,7 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
   const signer = await ethers.getSigner(deployer);
 
   const flairProxyABI = [
-    'function proxies(address) view returns (address)',
+    'function proxies(address) public view returns (address)',
     'function registerProxyFor(address) public returns (address)',
   ];
   const flairProxyContract = new ethers.Contract(
@@ -44,6 +44,7 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
   ) {
     console.log(' - Registering Flair proxy...');
     const tx = await flairProxyContract.registerProxyFor(deployer);
+    console.log('tx === ', tx);
     const result = await tx.wait();
     console.log(
       ` - Registered Flair proxy via transaction (${result.hash}), waiting for confirmation...`,

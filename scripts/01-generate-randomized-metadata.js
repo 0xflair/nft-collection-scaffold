@@ -3,7 +3,7 @@ const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 const fs = require('fs');
 
-const blueprint = require('../blueprint.config');
+const blueprint = require('../blueprint.config.json');
 const collectionConfig = require('../collection.config');
 
 const distDirectory = path.resolve(__dirname, '../dist');
@@ -42,7 +42,41 @@ function getRandomTraitsVariations() {
     };
   }
 
+  for (const name of Object.keys(selectedVariations)) {
+    if (selectedVariations[name].dependency) {
+      // for (const dependency of selectedVariations[name].dependency) {
+      const [traitName, traitValue] =
+        selectedVariations[name].dependency.split(':');
+      if (selectedVariations[traitName].name !== traitValue) {
+        return null;
+      }
+      // }
+    }
+  }
+
   return selectedVariations;
+}
+
+async function gatherAssets(traits) {
+  const assets = [];
+
+  for (const traitName in traits) {
+    if (!traits[traitName].assets) continue;
+
+    if (traits[traitName].assets['_all_']) {
+      assets.push(traits[traitName].assets['_all_']);
+    } else {
+      for (const dependency of Object.keys(traits[traitName].assets)) {
+        const [depTraitName, depTraitValue] = dependency.split(':');
+        if (traits[depTraitName].name === depTraitValue) {
+          assets.push(traits[traitName].assets[dependency]);
+          break;
+        }
+      }
+    }
+  }
+
+  return assets;
 }
 
 async function generateImageAsset(traits) {
@@ -52,9 +86,11 @@ async function generateImageAsset(traits) {
   );
   const ctx = canvas.getContext('2d');
 
-  const layers = Object.values(traits)
-    .sort((a, b) => a.overlayIndex - b.overlayIndex)
-    .filter((l) => l.layerImage);
+  const assets = await gatherAssets(traits);
+
+  const layers = _.sortBy(Object.values(assets), 'overlayIndex').filter(
+    (l) => l.layerImage,
+  );
 
   for (let i = 0, c = layers.length; i < c; i++) {
     const image = await loadImage(layers[i].layerImage);
@@ -76,9 +112,16 @@ async function generateRandomizedMetadata() {
     tokenId <= c;
     tokenId++
   ) {
-    console.log(`Generating metadata for token ${tokenId}...`);
-
+    process.stdout.write('.');
     const traitsVariations = getRandomTraitsVariations();
+
+    if (!traitsVariations) {
+      tokenId--;
+      continue;
+    }
+
+    console.log(`Generating metadata and image for token ${tokenId}...`);
+
     const image = await generateImageAsset(traitsVariations);
 
     fs.writeFileSync(
@@ -88,29 +131,40 @@ async function generateRandomizedMetadata() {
 
     const metadata = {
       name: `${collectionConfig.nftTitlePrefix} #${tokenId}`,
-      attributes: Object.entries(traitsVariations).map(
-        ([trait_type, variation]) => {
+      attributes: Object.entries(traitsVariations)
+        .filter(([trait_type]) => trait_type[0] !== '~')
+        .map(([trait_type, variation]) => {
           return {
-            trait_type,
-            value: variation.name,
+            trait_type: trait_type.replace('-', ' '),
+            value: variation.name.replace('-', ' '),
           };
-        },
-      ),
+        }),
     };
 
     fs.writeFileSync(
       `${distDirectory}/metadata/${tokenId}`,
       JSON.stringify(metadata, null, 2),
     );
+
+    console.log(`\n`);
   }
 
   return collectionConfig.maxTotalMint;
 }
 
+const start = new Date().getTime();
 generateRandomizedMetadata()
   .then((result) => {
     console.log(`# Successfully generated ${result} metadata items`);
   })
   .catch((error) => {
     console.error(`# Failed to generate with error:`, error);
+  })
+  .finally(() => {
+    const end = new Date().getTime();
+    console.log(
+      '# Execution time: ',
+      Math.ceil((end - start) / 1000 / 60),
+      'minutes',
+    );
   });

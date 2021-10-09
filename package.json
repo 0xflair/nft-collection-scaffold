@@ -1,9 +1,9 @@
 {
-  "name": "nft-avatar-scaffold",
+  "name": "nft-collection-scaffold",
   "version": "1.0.0",
-  "description": "Production-ready boilerplate code for an avatar collection on Ethereum",
+  "description": "Production-ready boilerplate code for a rarity-based NFT collection on Ethereum, Polygon, Optimism, Arbitrum and Binance Smart Chain",
   "main": "index.js",
-  "repository": "git@github.com:0xflair/nft-avatar-scaffold.git",
+  "repository": "git@github.com:0xflair/nft-collection-scaffold.git",
   "author": "Flair.Finance",
   "license": "MIT",
   "private": false,
