@@ -30,7 +30,7 @@ async function updateBlueprintFromLayers() {
     if (traitDependency) {
       const [depTraitName, depTraitValue] = traitDependency.split(':');
 
-      set({}, depTraitName, depTraitValue);
+      set({}, depTraitName, 'variations', depTraitValue);
     }
 
     const traitVariations = await fs.promises.readdir(
@@ -40,18 +40,12 @@ async function updateBlueprintFromLayers() {
     const keyName = traitDependency || '_all_';
 
     for (const traitVariation of traitVariations) {
-      const [variationName, probabilityPercent, variantDependency] =
-        traitVariation.replace(/\.[^.]+$/, '').split('.');
-
-      if (variantDependency) {
-        const [depTraitName, depTraitValue] = variantDependency.split(':');
-
-        set({}, depTraitName, depTraitValue);
-      }
+      const [variationName, probabilityPercent] = traitVariation
+        .replace(/\.[^.]+$/, '')
+        .split('.');
 
       set(
         {
-          dependency: variantDependency,
           assets: {
             [keyName]: {
               layerImage: path.resolve(
@@ -67,6 +61,7 @@ async function updateBlueprintFromLayers() {
             : undefined,
         },
         traitName,
+        'variations',
         variationName,
       );
     }
@@ -75,16 +70,20 @@ async function updateBlueprintFromLayers() {
   const updatedBlueprint = _.merge(blueprint, blueprintUpdates);
 
   for (const traitName of Object.keys(updatedBlueprint.traits)) {
-    const variationNames = Object.keys(updatedBlueprint.traits[traitName]);
+    const variationNames = Object.keys(
+      updatedBlueprint.traits[traitName].variations,
+    );
 
     const remainingProbability =
       1 -
-      Object.values(updatedBlueprint.traits[traitName])
+      Object.values(updatedBlueprint.traits[traitName].variations)
         .map((variation) =>
           variation.probabilityPercent ? variation.probabilityPercent / 100 : 0,
         )
         .reduce((p, c) => p + c);
-    const withoutProbability = Object.values(updatedBlueprint.traits[traitName])
+    const withoutProbability = Object.values(
+      updatedBlueprint.traits[traitName].variations,
+    )
       .map((variation) => !!variation.probabilityPercent)
       .filter((p) => !p).length;
 
@@ -95,9 +94,12 @@ async function updateBlueprintFromLayers() {
     } else {
       for (const variationName of variationNames) {
         if (
-          !updatedBlueprint.traits[traitName][variationName].probabilityPercent
+          !updatedBlueprint.traits[traitName].variations[variationName]
+            .probabilityPercent
         ) {
-          updatedBlueprint.traits[traitName][variationName].probabilityPercent =
+          updatedBlueprint.traits[traitName].variations[
+            variationName
+          ].probabilityPercent =
             (remainingProbability / withoutProbability) * 100;
         }
       }

@@ -28,8 +28,8 @@ function getRandomTraitsVariations() {
   const selectedVariations = {};
 
   for (const name of names) {
-    const variations = Object.keys(traits[name]);
-    const probabilities = Object.values(traits[name]).map(
+    const variations = Object.keys(traits[name].variations);
+    const probabilities = Object.values(traits[name].variations).map(
       (variation) => variation.probabilityPercent / 100,
     );
 
@@ -38,19 +38,47 @@ function getRandomTraitsVariations() {
 
     selectedVariations[name] = {
       name: variationName,
-      ...traits[name][variationName],
+      ...traits[name].variations[variationName],
     };
   }
 
-  for (const name of Object.keys(selectedVariations)) {
-    if (selectedVariations[name].dependency) {
-      // for (const dependency of selectedVariations[name].dependency) {
-      const [traitName, traitValue] =
-        selectedVariations[name].dependency.split(':');
-      if (selectedVariations[traitName].name !== traitValue) {
-        return null;
+  for (const constraint of blueprint.constraints) {
+    if (constraint.type === 'repulsion') {
+      let found = false;
+      for (const repulser of constraint.list) {
+        const [traitName, traitValue] = repulser.split(':');
+        if (
+          selectedVariations[traitName] &&
+          traitValue &&
+          selectedVariations[traitName].name === traitValue
+        ) {
+          if (found) {
+            return null;
+          } else {
+            found = true;
+          }
+        }
       }
-      // }
+    } else if (constraint.type === 'dependency') {
+      for (const depA of constraint.list) {
+        const [traitNameA, traitValueA] = depA.split(':');
+        let foundA = traitValueA
+          ? selectedVariations[traitNameA] &&
+            selectedVariations[traitNameA].name === traitValueA
+          : !!selectedVariations[traitNameA];
+        for (const depB of constraint.list) {
+          const [traitNameB, traitValueB] = depB.split(':');
+          let foundB = traitValueB
+            ? selectedVariations[traitNameB] &&
+              selectedVariations[traitNameB].name === traitValueB
+            : !!selectedVariations[traitNameB];
+          if ((foundA && !foundB) || (!foundA && foundB)) {
+            return null;
+          }
+        }
+      }
+    } else {
+      throw new Error(`Unsupported contraints type = ${constraint.type}`);
     }
   }
 
@@ -79,14 +107,14 @@ async function gatherAssets(traits) {
   return assets;
 }
 
-async function generateImageAsset(traits) {
+async function generateImageAsset(traitsVariations) {
   const canvas = createCanvas(
     blueprint.settings.width,
     blueprint.settings.height,
   );
   const ctx = canvas.getContext('2d');
 
-  const assets = await gatherAssets(traits);
+  const assets = await gatherAssets(traitsVariations);
 
   const layers = _.sortBy(Object.values(assets), 'overlayIndex').filter(
     (l) => l.layerImage,
@@ -112,6 +140,14 @@ async function generateRandomizedMetadata() {
     tokenId <= c;
     tokenId++
   ) {
+    if (
+      fs.existsSync(`${distDirectory}/images/${tokenId}`) &&
+      fs.existsSync(`${distDirectory}/metadata/${tokenId}`)
+    ) {
+      console.log(' - Skipping as metadata and image both exists.');
+      continue;
+    }
+
     process.stdout.write('.');
     const traitsVariations = getRandomTraitsVariations();
 
@@ -132,7 +168,7 @@ async function generateRandomizedMetadata() {
     const metadata = {
       name: `${collectionConfig.nftTitlePrefix} #${tokenId}`,
       attributes: Object.entries(traitsVariations)
-        .filter(([trait_type]) => trait_type[0] !== '~')
+        .filter(([traitName]) => !blueprint.traits[traitName].hiddenInMetadata)
         .map(([trait_type, variation]) => {
           return {
             trait_type: trait_type.replace('-', ' '),
@@ -145,8 +181,6 @@ async function generateRandomizedMetadata() {
       `${distDirectory}/metadata/${tokenId}`,
       JSON.stringify(metadata, null, 2),
     );
-
-    console.log(`\n`);
   }
 
   return collectionConfig.maxTotalMint;
