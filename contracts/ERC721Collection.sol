@@ -136,6 +136,36 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
         id; // avoid unused param warning
     }
 
+    function getInfo() external view returns (
+        uint256 price,
+        uint256 totalSupply,
+        uint256 senderBalance,
+        uint256 senderPreSaleClaimed,
+        uint256 maxTotalMint,
+        uint256 maxPreSaleMintPerAddress,
+        uint256 maxMintPerTransaction,
+        uint256 maxAllowedGasFee,
+        bool isPreSaleActive,
+        bool isPublicSaleActive,
+        bool isPurchaseEnabled,
+        bool isSenderAllowlisted
+    ) {
+        return (
+            PRICE,
+            this.totalSupply(),
+            this.balanceOf(msg.sender),
+            _preSaleAllowListClaimed[msg.sender],
+            MAX_TOTAL_MINT,
+            MAX_PRE_SALE_MINT_PER_ADDRESS,
+            MAX_MINT_PER_TRANSACTION,
+            MAX_ALLOWED_GAS_FEE,
+            _isPreSaleActive,
+            _isPublicSaleActive,
+            _isPurchaseEnabled,
+            _preSaleAllowList[msg.sender]
+        );
+    }
+
     /**
      * @dev See {IERC165-supportsInterface}.
      */
@@ -176,12 +206,6 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
             require(addresses[i] != address(0), "Can't add the null address");
 
             _preSaleAllowList[addresses[i]] = true;
-
-            /**
-            * @dev We don't want to reset _preSaleAllowListClaimed count
-            * if we try to add someone more than once.
-            */
-            _preSaleAllowListClaimed[addresses[i]] > 0 ? _preSaleAllowListClaimed[addresses[i]] : 0;
         }
     }
 
@@ -203,7 +227,7 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
         requireMintingConditions(to, count);
 
         if (_isPreSaleActive) {
-            _preSaleAllowListClaimed[msg.sender] += count;
+            _preSaleAllowListClaimed[to] += count;
         }
 
         for (uint256 i = 0; i < count; i++) {

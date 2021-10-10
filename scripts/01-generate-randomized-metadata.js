@@ -77,8 +77,37 @@ function getRandomTraitsVariations() {
           }
         }
       }
+    } else if (constraint.type === 'coexistence') {
+      let found = false;
+      for (const lookup of constraint.lookup) {
+        const [traitName, traitValue] = lookup.split(':');
+        if (traitName && selectedVariations[traitName]) {
+          if (traitValue) {
+            if (selectedVariations[traitName].name === traitValue) {
+              found = true;
+              break;
+            }
+          } else {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (found) {
+        if (constraint.remove) {
+          for (const item of constraint.remove) {
+            const [traitName, traitValue] = item.split(':');
+            if (
+              !traitValue ||
+              selectedVariations[traitName].name === traitValue
+            ) {
+              delete selectedVariations[traitName];
+            }
+          }
+        }
+      }
     } else {
-      throw new Error(`Unsupported contraints type = ${constraint.type}`);
+      throw new Error(`Unsupported constraint type = ${constraint.type}`);
     }
   }
 

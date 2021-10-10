@@ -5,102 +5,174 @@
   },
   "traits": {
     "Accessory": {
-      "Pearl": {
-        "layerImage": "assets/layers/Accessory/Pearl.png",
-        "probabilityPercent": 5,
-        "overlayIndex": 1
-      },
-      "Scuba Mask": {
-        "layerImage": "assets/layers/Accessory/Scuba Mask.png",
-        "probabilityPercent": 8,
-        "overlayIndex": 5
-      },
-      "Bamboo Flute": {
-        "layerImage": "assets/layers/Accessory/Bamboo Flute.png",
-        "probabilityPercent": 10,
-        "overlayIndex": 1
-      },
-      "Life Ring": {
-        "layerImage": "assets/layers/Accessory/Message In A Bottle.png",
-        "probabilityPercent": 15,
-        "overlayIndex": 1
-      },
-      "Message In A Bottle": {
-        "layerImage": "assets/layers/Accessory/Life Ring.png",
-        "probabilityPercent": 20,
-        "overlayIndex": 1
-      },
-      "None": {
-        "noImage": true,
-        "probabilityPercent": 42,
-        "overlayIndex": 1
+      "variations": {
+        "Bamboo-Flute": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/010.Accessory/Bamboo-Flute.15.png",
+              "overlayIndex": 10
+            }
+          },
+          "probabilityPercent": 15
+        },
+        "Life-Ring": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/010.Accessory/Life-Ring.25.png",
+              "overlayIndex": 10
+            }
+          },
+          "probabilityPercent": 25
+        },
+        "Message-In-A-Bottle": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/010.Accessory/Message-In-A-Bottle.5.png",
+              "overlayIndex": 10
+            }
+          },
+          "probabilityPercent": 5
+        },
+        "Pearl": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/010.Accessory/Pearl.5.png",
+              "overlayIndex": 10
+            }
+          },
+          "probabilityPercent": 5
+        },
+        "Scuba-Mask": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/010.Accessory/Scuba-Mask.50.png",
+              "overlayIndex": 10
+            }
+          },
+          "probabilityPercent": 50
+        }
       }
     },
     "Base": {
-      "Goldfish": {
-        "layerImage": "assets/layers/Base/Goldfish.png",
-        "probabilityPercent": 10,
-        "overlayIndex": 2
-      },
-      "Starfish": {
-        "layerImage": "assets/layers/Base/Starfish.png",
-        "probabilityPercent": 20,
-        "overlayIndex": 2
-      },
-      "Crab": {
-        "layerImage": "assets/layers/Base/Narwhal.png",
-        "probabilityPercent": 30,
-        "overlayIndex": 2
-      },
-      "Narwhal": {
-        "layerImage": "assets/layers/Base/Narwhal.png",
-        "probabilityPercent": 40,
-        "overlayIndex": 2
+      "variations": {
+        "Crab": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/020.Base/Crab.20.png",
+              "overlayIndex": 20
+            }
+          },
+          "probabilityPercent": 20
+        },
+        "Goldfish": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/020.Base/Goldfish.20.png",
+              "overlayIndex": 20
+            }
+          },
+          "probabilityPercent": 20
+        },
+        "Narwhal": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/020.Base/Narwhal.30.png",
+              "overlayIndex": 20
+            }
+          },
+          "probabilityPercent": 30
+        },
+        "Starfish": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/020.Base/Starfish.30.png",
+              "overlayIndex": 20
+            }
+          },
+          "probabilityPercent": 30
+        }
       }
     },
     "Eyes": {
-      "Wink": {
-        "layerImage": "assets/layers/Eyes/Wink.png",
-        "probabilityPercent": 10,
-        "overlayIndex": 3
-      },
-      "Content": {
-        "layerImage": "assets/layers/Eyes/Content.png",
-        "probabilityPercent": 20,
-        "overlayIndex": 3
-      },
-      "Joy": {
-        "layerImage": "assets/layers/Eyes/Joy.png",
-        "probabilityPercent": 30,
-        "overlayIndex": 3
-      },
-      "Big": {
-        "layerImage": "assets/layers/Eyes/Big.png",
-        "probabilityPercent": 40,
-        "overlayIndex": 3
+      "variations": {
+        "Big": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/030.Eyes/Big.10.png",
+              "overlayIndex": 30
+            }
+          },
+          "probabilityPercent": 10
+        },
+        "Content": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/030.Eyes/Content.20.png",
+              "overlayIndex": 30
+            }
+          },
+          "probabilityPercent": 20
+        },
+        "Joy": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/030.Eyes/Joy.30.png",
+              "overlayIndex": 30
+            }
+          },
+          "probabilityPercent": 30
+        },
+        "Wink": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/030.Eyes/Wink.40.png",
+              "overlayIndex": 30
+            }
+          },
+          "probabilityPercent": 40
+        }
       }
     },
     "Mouth": {
-      "Surprised": {
-        "layerImage": "assets/layers/Mouth/Surprised.png",
-        "probabilityPercent": 10,
-        "overlayIndex": 4
-      },
-      "Smirk": {
-        "layerImage": "assets/layers/Mouth/Smirk.png",
-        "probabilityPercent": 20,
-        "overlayIndex": 4
-      },
-      "Cute": {
-        "layerImage": "assets/layers/Mouth/Cute.png",
-        "probabilityPercent": 30,
-        "overlayIndex": 4
-      },
-      "Happy": {
-        "layerImage": "assets/layers/Mouth/Happy.png",
-        "probabilityPercent": 40,
-        "overlayIndex": 4
+      "variations": {
+        "Cute": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/040.Mouth/Cute.5_5.png",
+              "overlayIndex": 40
+            }
+          },
+          "probabilityPercent": 5.5
+        },
+        "Happy": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/040.Mouth/Happy.40.png",
+              "overlayIndex": 40
+            }
+          },
+          "probabilityPercent": 40
+        },
+        "Smirk": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/040.Mouth/Smirk.10_5.png",
+              "overlayIndex": 40
+            }
+          },
+          "probabilityPercent": 10.5
+        },
+        "Surprised": {
+          "assets": {
+            "_all_": {
+              "layerImage": "assets/traits/040.Mouth/Surprised.44.png",
+              "overlayIndex": 40
+            }
+          },
+          "probabilityPercent": 44
+        }
       }
     }
-  }
+  },
+  "constraints": []
 }

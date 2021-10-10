@@ -12,3 +12,4 @@ contracts\/collections\/*
 # Hardhat files
 cache
 artifacts
+deployments
