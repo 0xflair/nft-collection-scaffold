@@ -1,7 +1,7 @@
 # NFT Collection Scaffold
 Production-ready code for a rarity-based PFP (a.k.a 10k avatar) collection on Ethereum, Polygon (Matic), Binance Chain and any other EVM-compatible chain.
 
-You only need to provide your assets, rarity traits,then you're ready to launch your collection on mainnet!
+You only need to provide your assets, rarity traits, then you're ready to launch your collection on mainnet!
 
 #### Current Features
 * Algorithm to **randomly generate static images** based on multiple asset groups (e.g. hats, faces, bodies etc.)
@@ -48,6 +48,16 @@ TODO
 
 ## 4. Reveal metadata of the NFTs
 TODO
+
+# Blueprint
+To define your traits, their rarity, constraints and dependencies you need provide provide a blueprint in `blueprint.config.json`.
+You can copy a basic example from `blueprint.config.json.dist`.
+
+## Structure
+TODO: explain each property and supported capabilities of blueprint (settings, traits, variations, constraints).
+
+## Automatic Generation
+TODO: explain how to automatically generate a blueprint based on a specific convention on asset file names 
 
 # Best Practices
 Now that you have decided to launch an NFT-based avatar collection, we'd like to share a few ideas that can help you succeed:
