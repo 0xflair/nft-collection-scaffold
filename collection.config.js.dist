@@ -33,6 +33,10 @@ module.exports = {
   // Maximum allowed gas fee to prevent gas wars in gwei (0 = disabled)
   maxAllowedGasFee: 0,
 
+  // A random seed to always get the same collection (useful for gradual reveal)
+  // You can uncomment to one of resulting values from (generate-randomized-metadata.js) when you're happy with a specific seed.
+  // randomnessSeed: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+
   // Primary image of collection stored in contract-level metadata shown in OpenSea
   collectionImage: 'assets/contract/image.png',
 

@@ -1,5 +1,7 @@
 const web3 = require('web3');
 
+const collectionConfig = require('../collection.config');
+
 module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
   const { deployer } = await getNamedAccounts();
 
@@ -56,7 +58,7 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
 
   console.log(` - Allowing Flair to fund NFTs for this collection...`);
   await deployments.execute(
-    'ERC721Collection',
+    collectionConfig.contract,
     { from: deployer },
     'grantRole',
     web3.utils.soliditySha3('MINTER_ROLE'),

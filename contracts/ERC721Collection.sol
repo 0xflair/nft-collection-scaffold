@@ -226,7 +226,7 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
         // Make sure minting is allowed
         requireMintingConditions(to, count);
 
-        if (_isPreSaleActive) {
+        if (_isPreSaleActive && !_isPublicSaleActive) {
             _preSaleAllowListClaimed[to] += count;
         }
 
