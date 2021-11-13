@@ -42,6 +42,20 @@ function getRandomTraitsVariations() {
       name: variationName,
       ...traits[name].variations[variationName],
     };
+
+    if (traits[name].variations[variationName].directDependency) {
+      for (const directDepName of Object.keys(
+        traits[name].variations[variationName].directDependency,
+      )) {
+        const directDepVariationName =
+          traits[name].variations[variationName].directDependency[directDepName]
+            .variation;
+        selectedVariations[directDepName] = {
+          name: directDepVariationName,
+          ...traits[directDepName].variations[directDepVariationName],
+        };
+      }
+    }
   }
 
   for (const constraint of blueprint.constraints) {

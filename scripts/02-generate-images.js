@@ -33,31 +33,41 @@ async function gatherAssets(traits) {
   return assets;
 }
 
-async function generateImageAsset(traitsVariations) {
-  const canvas = createCanvas(
-    blueprint.settings.width,
-    blueprint.settings.height,
-  );
-  const ctx = canvas.getContext('2d');
+async function generateImageAsset(traitsVariations, path) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const canvas = createCanvas(
+        blueprint.settings.width,
+        blueprint.settings.height,
+      );
+      const ctx = canvas.getContext('2d');
 
-  const assets = await gatherAssets(traitsVariations);
+      const assets = await gatherAssets(traitsVariations);
 
-  const layers = _.sortBy(Object.values(assets), 'overlayIndex').filter(
-    (l) => l.layerImage,
-  );
+      const layers = _.sortBy(Object.values(assets), 'overlayIndex').filter(
+        (l) => l.layerImage,
+      );
 
-  for (let i = 0, c = layers.length; i < c; i++) {
-    const image = await loadImage(layers[i].layerImage);
-    ctx.drawImage(
-      image,
-      0,
-      0,
-      blueprint.settings.width,
-      blueprint.settings.height,
-    );
-  }
+      for (let i = 0, c = layers.length; i < c; i++) {
+        const image = await loadImage(layers[i].layerImage);
+        ctx.drawImage(
+          image,
+          0,
+          0,
+          blueprint.settings.width,
+          blueprint.settings.height,
+        );
+      }
 
-  return canvas;
+      const image = canvas.createJPEGStream({ quality: 1 });
+
+      const out = fs.createWriteStream(path);
+      out.on('finish', resolve);
+      image.pipe(out);
+    } catch (err) {
+      reject(err);
+    }
+  });
 }
 
 function getTraitsVariations(tokenId) {
@@ -81,13 +91,11 @@ async function generateImages() {
 
     const traitsVariations = getTraitsVariations(tokenId);
 
-    console.log(` - Generating metadata and image for token ${tokenId}...`);
+    console.log(` - Generating image for token ${tokenId}...`);
 
-    const image = await generateImageAsset(traitsVariations);
-
-    fs.writeFileSync(
+    await generateImageAsset(
+      traitsVariations,
       `${distDirectory}/images/${tokenId}`,
-      image.toBuffer('image/png'),
     );
   }
 

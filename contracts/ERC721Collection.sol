@@ -38,6 +38,7 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
     string private _contractURI;
     string private _placeholderURI;
     string private _baseTokenURI;
+    bool private _baseURIFrozen;
     address private _raribleRoyaltyAddress;
     address private _openSeaProxyRegistryAddress;
 
@@ -89,7 +90,12 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
     }
 
     function setBaseURI(string memory baseURI) external onlyOwner {
+        require(!_baseURIFrozen, "ERC721/BASE_URI_FROZEN");
         _baseTokenURI = baseURI;
+    }
+
+    function freezeBaseURI() external onlyOwner {
+        _baseURIFrozen = true;
     }
 
     function setPlaceholderURI(string memory placeholderURI) external onlyOwner {
@@ -221,7 +227,7 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
      */
     function mint(address to, uint256 count) public nonReentrant {
         // Only allow minters to bypass the payment
-        require(hasRole(MINTER_ROLE, msg.sender), "BASE_COLLECTION/NOT_MINTER_ROLE");
+        require(hasRole(MINTER_ROLE, msg.sender), "ERC721_COLLECTION/NOT_MINTER_ROLE");
 
         // Make sure minting is allowed
         requireMintingConditions(to, count);
@@ -243,16 +249,16 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
      */
     function purchase(uint256 count) public payable nonReentrant {
         // Caller cannot be a smart contract to avoid front-running by bots
-        require(!msg.sender.isContract(), 'BASE_COLLECTION/CONTRACT_CANNOT_CALL');
+        require(!msg.sender.isContract(), 'ERC721_COLLECTION/CONTRACT_CANNOT_CALL');
 
         // Make sure minting is allowed
         requireMintingConditions(msg.sender, count);
 
         // Sent value matches required ETH amount
-        require(_isPurchaseEnabled, 'BASE_COLLECTION/PURCHASE_DISABLED');
+        require(_isPurchaseEnabled, 'ERC721_COLLECTION/PURCHASE_DISABLED');
 
         // Sent value matches required ETH amount
-        require(PRICE * count <= msg.value, 'BASE_COLLECTION/INSUFFICIENT_ETH_AMOUNT');
+        require(PRICE * count <= msg.value, 'ERC721_COLLECTION/INSUFFICIENT_ETH_AMOUNT');
 
         if (_isPreSaleActive) {
             _preSaleAllowListClaimed[msg.sender] += count;
@@ -303,17 +309,17 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
                 _preSaleAllowList[to] &&
                 _preSaleAllowListClaimed[to] + count <= MAX_PRE_SALE_MINT_PER_ADDRESS
             )
-        , "BASE_COLLECTION/CANNOT_MINT");
+        , "ERC721_COLLECTION/CANNOT_MINT");
 
         // If max-gas fee is configured (avoid gas wars), transaction must not exceed that
         if (MAX_ALLOWED_GAS_FEE > 0)
-            require(tx.gasprice < MAX_ALLOWED_GAS_FEE * 1000000000, "BASE_COLLECTION/GAS_FEE_NOT_ALLOWED");
+            require(tx.gasprice < MAX_ALLOWED_GAS_FEE * 1000000000, "ERC721_COLLECTION/GAS_FEE_NOT_ALLOWED");
 
         // Total minted tokens must not exceed maximum supply
-        require(totalSupply() + count <= MAX_TOTAL_MINT, "BASE_COLLECTION/EXCEEDS_MAX_SUPPLY");
+        require(totalSupply() + count <= MAX_TOTAL_MINT, "ERC721_COLLECTION/EXCEEDS_MAX_SUPPLY");
 
         // Number of minted tokens must not exceed maximum limit per transaction
-        require(count <= MAX_MINT_PER_TRANSACTION, "BASE_COLLECTION/EXCEEDS_MAX_PER_TX");
+        require(count <= MAX_MINT_PER_TRANSACTION, "ERC721_COLLECTION/EXCEEDS_MAX_PER_TX");
     }
 
     /**

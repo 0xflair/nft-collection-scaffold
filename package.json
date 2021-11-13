@@ -54,5 +54,8 @@
     "seedrandom": "^3.0.5",
     "solhint": "^3.3.6",
     "solidity-coverage": "^0.7.16"
+  },
+  "dependencies": {
+    "csv-parse": "^4.16.3"
   }
 }

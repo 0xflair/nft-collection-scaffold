@@ -18,7 +18,7 @@ describe('ERC721Collection', () => {
     const { userA } = await setupTest();
 
     await expect(userA.testCollection.purchase(1)).to.be.revertedWith(
-      'BASE_COLLECTION/CANNOT_MINT',
+      'ERC721_COLLECTION/CANNOT_MINT',
     );
   });
 
@@ -28,7 +28,7 @@ describe('ERC721Collection', () => {
     await deployer.testCollection.togglePublicSale(true);
 
     await expect(userA.testCollection.purchase(1)).to.be.revertedWith(
-      'BASE_COLLECTION/PURCHASE_DISABLED',
+      'ERC721_COLLECTION/PURCHASE_DISABLED',
     );
   });
 
@@ -39,7 +39,7 @@ describe('ERC721Collection', () => {
     await deployer.testCollection.togglePurchaseEnabled(true);
 
     await expect(userA.testCollection.purchase(1)).to.be.revertedWith(
-      'BASE_COLLECTION/INSUFFICIENT_ETH_AMOUNT',
+      'ERC721_COLLECTION/INSUFFICIENT_ETH_AMOUNT',
     );
   });
 
@@ -78,6 +78,6 @@ describe('ERC721Collection', () => {
       userA.testCollection.purchase(1, {
         value: web3.utils.toWei('0.08'),
       }),
-    ).to.be.revertedWith('BASE_COLLECTION/CANNOT_MINT');
+    ).to.be.revertedWith('ERC721_COLLECTION/CANNOT_MINT');
   });
 });
