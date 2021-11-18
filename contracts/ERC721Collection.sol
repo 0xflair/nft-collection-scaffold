@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 
 import "hardhat/console.sol";
 
@@ -17,7 +18,10 @@ import "./rarible/IRoyalties.sol";
 import "./rarible/LibPart.sol";
 import "./rarible/LibRoyaltiesV2.sol";
 
-contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
+import "./polygon/ContextMixin.sol";
+import "./polygon/NativeMetaTransaction.sol";
+
+contract ERC721Collection is ContextMixin, NativeMetaTransaction, ERC721Enumerable, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
     using SafeMath for uint256;
     using Address for address;
     using Address for address payable;
@@ -73,6 +77,8 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
 
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         _setupRole(MINTER_ROLE, _msgSender());
+
+        _initializeEIP712(name);
     }
 
     // ADMIN
@@ -172,6 +178,15 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
         );
     }
 
+    function _msgSender()
+    internal
+    override
+    view
+    returns (address sender)
+    {
+        return ContextMixin.msgSender();
+    }
+
     /**
      * @dev See {IERC165-supportsInterface}.
      */
@@ -198,10 +213,21 @@ contract ERC721Collection is ERC721Enumerable, Ownable, ReentrancyGuard, AccessC
     view
     returns (bool)
     {
-        // Whitelist OpenSea proxy contract for easy trading.
-        ProxyRegistry proxyRegistry = ProxyRegistry(_openSeaProxyRegistryAddress);
-        if (address(proxyRegistry.proxies(owner)) == operator) {
-            return true;
+        if (_openSeaProxyRegistryAddress != address(0)) {
+            // On Polygon
+            if (block.chainid == 137 || block.chainid == 80001) {
+                // if OpenSea's ERC721 Proxy Address is detected, auto-return true
+                if (operator == address(_openSeaProxyRegistryAddress)) {
+                    return true;
+                }
+            // On Ethereum
+            } else if (block.chainid == 1 || block.chainid == 4) {
+                // Whitelist OpenSea proxy contract for easy trading.
+                ProxyRegistry proxyRegistry = ProxyRegistry(_openSeaProxyRegistryAddress);
+                if (address(proxyRegistry.proxies(owner)) == operator) {
+                    return true;
+                }
+            }
         }
 
         return super.isApprovedForAll(owner, operator);
