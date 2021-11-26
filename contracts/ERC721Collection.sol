@@ -3,7 +3,6 @@
 pragma solidity 0.8.3;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -21,7 +20,7 @@ import "./rarible/LibRoyaltiesV2.sol";
 import "./polygon/ContextMixin.sol";
 import "./polygon/NativeMetaTransaction.sol";
 
-contract ERC721Collection is ContextMixin, NativeMetaTransaction, ERC721Enumerable, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
+contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
     using SafeMath for uint256;
     using Address for address;
     using Address for address payable;
@@ -132,6 +131,10 @@ contract ERC721Collection is ContextMixin, NativeMetaTransaction, ERC721Enumerab
 
     // PUBLIC
 
+    function totalSupply() public view returns (uint256) {
+        return _currentTokenId + 1;
+    }
+
     function contractURI() public view returns (string memory) {
         return _contractURI;
     }
@@ -194,7 +197,7 @@ contract ERC721Collection is ContextMixin, NativeMetaTransaction, ERC721Enumerab
     public
     view
     virtual
-    override(ERC721Enumerable, AccessControl)
+    override(ERC721, AccessControl)
     returns (bool)
     {
         if(interfaceId == LibRoyaltiesV2._INTERFACE_ID_ROYALTIES) {

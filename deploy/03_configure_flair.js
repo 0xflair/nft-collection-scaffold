@@ -48,7 +48,7 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
     const tx = await flairProxyContract.registerProxyFor(deployer);
     const result = await tx.wait();
     console.log(
-      ` - Registered Flair proxy via transaction (${result.hash}), waiting for confirmation...`,
+      ` - Registered Flair proxy via transaction (${result.transactionHash}), waiting for confirmation...`,
     );
     deployerProxyAddress = await flairProxyContract.proxies(deployer);
     console.log(

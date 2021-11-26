@@ -16,6 +16,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { IpfsHash: imageHash } = await pinata.pinFromFS(
     path.resolve(collectionConfig.collectionImage),
   );
+  console.log(` - IPFS Hash: ${imageHash}`);
 
   const contractMetadata = {
     name: collectionConfig.name,
