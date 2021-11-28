@@ -14,6 +14,9 @@
     "format:fix": "prettier --write \"**/*.{ts,js,sol}\"",
     "test": "npx hardhat test --network hardhat",
     "build": "npm run clean && npm run compile",
+    "deploy:rinkeby": "npx hardhat deploy --network rinkeby && npx hardhat etherscan-verify --network rinkeby",
+    "deploy:mumbai": "npx hardhat deploy --network mumbai && npx hardhat etherscan-verify --network mumbai",
+    "deploy:matic": "npx hardhat deploy --network matic && npx hardhat etherscan-verify --network matic",
     "clean": "npx hardhat clean",
     "compile": "npx hardhat compile",
     "coverage": "npm run build && npx hardhat coverage --temp artifacts --network hardhat"

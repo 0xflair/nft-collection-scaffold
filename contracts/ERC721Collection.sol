@@ -10,8 +10,6 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 
-import "hardhat/console.sol";
-
 import "./opensea/ProxyRegistry.sol";
 import "./rarible/IRoyalties.sol";
 import "./rarible/LibPart.sol";
@@ -147,8 +145,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         result = new LibPart.Part[](1);
 
         result[0].account = payable(_raribleRoyaltyAddress);
-        result[0].value = 10000; // 100% of royalty goes to defined address above.
-        id; // avoid unused param warning
+        result[0].value = 10000;
+        // 100% of royalty goes to defined address above.
+        id;
+        // avoid unused param warning
     }
 
     function getInfo() external view returns (
@@ -166,18 +166,18 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         bool isSenderAllowlisted
     ) {
         return (
-            PRICE,
-            this.totalSupply(),
-            this.balanceOf(msg.sender),
-            _preSaleAllowListClaimed[msg.sender],
-            MAX_TOTAL_MINT,
-            MAX_PRE_SALE_MINT_PER_ADDRESS,
-            MAX_MINT_PER_TRANSACTION,
-            MAX_ALLOWED_GAS_FEE,
-            _isPreSaleActive,
-            _isPublicSaleActive,
-            _isPurchaseEnabled,
-            _preSaleAllowList[msg.sender]
+        PRICE,
+        this.totalSupply(),
+        this.balanceOf(msg.sender),
+        _preSaleAllowListClaimed[msg.sender],
+        MAX_TOTAL_MINT,
+        MAX_PRE_SALE_MINT_PER_ADDRESS,
+        MAX_MINT_PER_TRANSACTION,
+        MAX_ALLOWED_GAS_FEE,
+        _isPreSaleActive,
+        _isPublicSaleActive,
+        _isPurchaseEnabled,
+        _preSaleAllowList[msg.sender]
         );
     }
 
@@ -200,7 +200,7 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
     override(ERC721, AccessControl)
     returns (bool)
     {
-        if(interfaceId == LibRoyaltiesV2._INTERFACE_ID_ROYALTIES) {
+        if (interfaceId == LibRoyaltiesV2._INTERFACE_ID_ROYALTIES) {
             return true;
         }
 
@@ -223,8 +223,8 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
                 if (operator == address(_openSeaProxyRegistryAddress)) {
                     return true;
                 }
-            // On Ethereum
-            } else if (block.chainid == 1 || block.chainid == 4) {
+                // On Ethereum
+            } else if (block.chainid == 1 || block.chainid == 4 || block.chainid == 5) {
                 // Whitelist OpenSea proxy contract for easy trading.
                 ProxyRegistry proxyRegistry = ProxyRegistry(_openSeaProxyRegistryAddress);
                 if (address(proxyRegistry.proxies(owner)) == operator) {
@@ -329,14 +329,14 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
      */
     function requireMintingConditions(address to, uint256 count) internal view {
         require(
-            // Either public sale is active
+        // Either public sale is active
             _isPublicSaleActive ||
 
             // Or, pre-sale is active AND address is allow-listed AND address have not minted more than max allowed
             (
-                _isPreSaleActive &&
-                _preSaleAllowList[to] &&
-                _preSaleAllowListClaimed[to] + count <= MAX_PRE_SALE_MINT_PER_ADDRESS
+            _isPreSaleActive &&
+            _preSaleAllowList[to] &&
+            _preSaleAllowListClaimed[to] + count <= MAX_PRE_SALE_MINT_PER_ADDRESS
             )
         , "ERC721_COLLECTION/CANNOT_MINT");
 
