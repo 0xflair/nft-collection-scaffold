@@ -130,7 +130,7 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
     // PUBLIC
 
     function totalSupply() public view returns (uint256) {
-        return _currentTokenId + 1;
+        return _currentTokenId;
     }
 
     function contractURI() public view returns (string memory) {
