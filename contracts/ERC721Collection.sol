@@ -18,6 +18,7 @@ import "./rarible/LibRoyaltiesV2.sol";
 import "./polygon/ContextMixin.sol";
 import "./polygon/NativeMetaTransaction.sol";
 
+// TODO Add contract check by Size AND (tx.origin == msg.sender)
 contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
     using SafeMath for uint256;
     using Address for address;
@@ -168,7 +169,7 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         return (
         PRICE,
         this.totalSupply(),
-        this.balanceOf(msg.sender),
+        msg.sender == address(0) ? 0 : this.balanceOf(msg.sender),
         _preSaleAllowListClaimed[msg.sender],
         MAX_TOTAL_MINT,
         MAX_PRE_SALE_MINT_PER_ADDRESS,
