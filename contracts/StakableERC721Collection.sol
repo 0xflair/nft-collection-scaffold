@@ -45,6 +45,19 @@ contract StakableERC721Collection is ERC721Collection, StakableInterface {
     }
 
     /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(ERC721Collection)
+    returns (bool)
+    {
+        return interfaceId == type(StakableInterface).interfaceId || super.supportsInterface(interfaceId);
+    }
+
+    /**
      * Locks token(s) to effectively stake them, while keeping in the same wallet.
      * This mechanism prevents them from being transferred, yet still will show correct owner.
      */
