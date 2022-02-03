@@ -18,6 +18,11 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
 
   const { FLAIR_REGISTRY_ADDRESS } = process.env;
 
+  if (!FLAIR_REGISTRY_ADDRESS) {
+    console.log('- skipping Flair configuration: no FLAIR_REGISTRY_ADDRESS');
+    return;
+  }
+
   const signer = await ethers.getSigner(deployer);
 
   const flairProxyABI = [

@@ -18,7 +18,6 @@ import "./rarible/LibRoyaltiesV2.sol";
 import "./polygon/ContextMixin.sol";
 import "./polygon/NativeMetaTransaction.sol";
 
-// TODO Add contract check by Size AND (tx.origin == msg.sender)
 contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
     using SafeMath for uint256;
     using Address for address;
@@ -253,7 +252,7 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
      * Mints a specified number of tokens to an address without requiring payment.
      * Caller must be an address with MINTER role.
      *
-     * Useful for gifting by owner or integration with Flair.Finance funding options.
+     * Useful for gifting by owner or integration with Flair.Finance escrow.
      */
     function mint(address to, uint256 count) public nonReentrant {
         // Only allow minters to bypass the payment
@@ -276,10 +275,17 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
     /**
      * Accepts required payment and mints a specified number of tokens to an address.
      * This method also checks if direct purchase is enabled.
+     *
+     * Supposed to be called by collectors directly (without Flair's escrow)
      */
     function purchase(uint256 count) public payable nonReentrant {
         // Caller cannot be a smart contract to avoid front-running by bots
+        // Note this line rejects multi-sigs and contract-based wallets
         require(!msg.sender.isContract(), 'ERC721_COLLECTION/CONTRACT_CANNOT_CALL');
+
+        // Minter must call directly not via a third-party
+        // Note this line rejects multi-sigs and contract-based wallets
+        require(tx.origin == msg.sender, 'ERC721_COLLECTION/DIRECT_CALL_ONLY');
 
         // Make sure minting is allowed
         requireMintingConditions(msg.sender, count);
