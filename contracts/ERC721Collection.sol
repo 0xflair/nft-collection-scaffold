@@ -2,28 +2,36 @@
 
 pragma solidity 0.8.3;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
+import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/access/AccessControl.sol';
+import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import '@openzeppelin/contracts/utils/Address.sol';
+import '@openzeppelin/contracts/utils/math/SafeMath.sol';
+import '@openzeppelin/contracts/metatx/ERC2771Context.sol';
 
-import "./opensea/ProxyRegistry.sol";
-import "./rarible/IRoyalties.sol";
-import "./rarible/LibPart.sol";
-import "./rarible/LibRoyaltiesV2.sol";
+import './opensea/ProxyRegistry.sol';
+import './rarible/IRoyalties.sol';
+import './rarible/LibPart.sol';
+import './rarible/LibRoyaltiesV2.sol';
 
-import "./polygon/ContextMixin.sol";
-import "./polygon/NativeMetaTransaction.sol";
+import './polygon/ContextMixin.sol';
+import './polygon/NativeMetaTransaction.sol';
 
-contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownable, ReentrancyGuard, AccessControl, IRoyalties {
+contract ERC721Collection is
+    ContextMixin,
+    ERC721,
+    NativeMetaTransaction,
+    Ownable,
+    ReentrancyGuard,
+    AccessControl,
+    IRoyalties
+{
     using SafeMath for uint256;
     using Address for address;
     using Address for address payable;
 
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
 
     uint256 public PRICE;
     uint256 public MAX_TOTAL_MINT;
@@ -93,7 +101,7 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
     }
 
     function setBaseURI(string memory baseURI) external onlyOwner {
-        require(!_baseURIFrozen, "ERC721/BASE_URI_FROZEN");
+        require(!_baseURIFrozen, 'ERC721/BASE_URI_FROZEN');
         _baseTokenURI = baseURI;
     }
 
@@ -101,7 +109,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         _baseURIFrozen = true;
     }
 
-    function setPlaceholderURI(string memory placeholderURI) external onlyOwner {
+    function setPlaceholderURI(string memory placeholderURI)
+        external
+        onlyOwner
+    {
         _placeholderURI = placeholderURI;
     }
 
@@ -137,11 +148,26 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         return _contractURI;
     }
 
-    function tokenURI(uint256 _tokenId) override public view returns (string memory) {
-        return bytes(_baseTokenURI).length > 0 ? string(abi.encodePacked(_baseTokenURI, Strings.toString(_tokenId))) : _placeholderURI;
+    function tokenURI(uint256 _tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        return
+            bytes(_baseTokenURI).length > 0
+                ? string(
+                    abi.encodePacked(_baseTokenURI, Strings.toString(_tokenId))
+                )
+                : _placeholderURI;
     }
 
-    function getRaribleV2Royalties(uint256 id) override external view returns (LibPart.Part[] memory result) {
+    function getRaribleV2Royalties(uint256 id)
+        external
+        view
+        override
+        returns (LibPart.Part[] memory result)
+    {
         result = new LibPart.Part[](1);
 
         result[0].account = payable(_raribleRoyaltyAddress);
@@ -151,42 +177,41 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         // avoid unused param warning
     }
 
-    function getInfo() external view returns (
-        uint256 price,
-        uint256 totalSupply,
-        uint256 senderBalance,
-        uint256 senderPreSaleClaimed,
-        uint256 maxTotalMint,
-        uint256 maxPreSaleMintPerAddress,
-        uint256 maxMintPerTransaction,
-        uint256 maxAllowedGasFee,
-        bool isPreSaleActive,
-        bool isPublicSaleActive,
-        bool isPurchaseEnabled,
-        bool isSenderAllowlisted
-    ) {
+    function getInfo()
+        external
+        view
+        returns (
+            uint256 price,
+            uint256 totalSupply,
+            uint256 senderBalance,
+            uint256 senderPreSaleClaimed,
+            uint256 maxTotalMint,
+            uint256 maxPreSaleMintPerAddress,
+            uint256 maxMintPerTransaction,
+            uint256 maxAllowedGasFee,
+            bool isPreSaleActive,
+            bool isPublicSaleActive,
+            bool isPurchaseEnabled,
+            bool isSenderAllowlisted
+        )
+    {
         return (
-        PRICE,
-        this.totalSupply(),
-        msg.sender == address(0) ? 0 : this.balanceOf(msg.sender),
-        _preSaleAllowListClaimed[msg.sender],
-        MAX_TOTAL_MINT,
-        MAX_PRE_SALE_MINT_PER_ADDRESS,
-        MAX_MINT_PER_TRANSACTION,
-        MAX_ALLOWED_GAS_FEE,
-        _isPreSaleActive,
-        _isPublicSaleActive,
-        _isPurchaseEnabled,
-        _preSaleAllowList[msg.sender]
+            PRICE,
+            this.totalSupply(),
+            msg.sender == address(0) ? 0 : this.balanceOf(msg.sender),
+            _preSaleAllowListClaimed[msg.sender],
+            MAX_TOTAL_MINT,
+            MAX_PRE_SALE_MINT_PER_ADDRESS,
+            MAX_MINT_PER_TRANSACTION,
+            MAX_ALLOWED_GAS_FEE,
+            _isPreSaleActive,
+            _isPublicSaleActive,
+            _isPurchaseEnabled,
+            _preSaleAllowList[msg.sender]
         );
     }
 
-    function _msgSender()
-    internal
-    override
-    view
-    returns (address sender)
-    {
+    function _msgSender() internal view override returns (address sender) {
         return ContextMixin.msgSender();
     }
 
@@ -194,11 +219,11 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
      * @dev See {IERC165-supportsInterface}.
      */
     function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC721, AccessControl)
-    returns (bool)
+        public
+        view
+        virtual
+        override(ERC721, AccessControl)
+        returns (bool)
     {
         if (interfaceId == LibRoyaltiesV2._INTERFACE_ID_ROYALTIES) {
             return true;
@@ -211,10 +236,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
      * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-less listings.
      */
     function isApprovedForAll(address owner, address operator)
-    override
-    public
-    view
-    returns (bool)
+        public
+        view
+        override
+        returns (bool)
     {
         if (_openSeaProxyRegistryAddress != address(0)) {
             // On Polygon
@@ -224,9 +249,13 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
                     return true;
                 }
                 // On Ethereum
-            } else if (block.chainid == 1 || block.chainid == 4 || block.chainid == 5) {
+            } else if (
+                block.chainid == 1 || block.chainid == 4 || block.chainid == 5
+            ) {
                 // Whitelist OpenSea proxy contract for easy trading.
-                ProxyRegistry proxyRegistry = ProxyRegistry(_openSeaProxyRegistryAddress);
+                ProxyRegistry proxyRegistry = ProxyRegistry(
+                    _openSeaProxyRegistryAddress
+                );
                 if (address(proxyRegistry.proxies(owner)) == operator) {
                     return true;
                 }
@@ -236,7 +265,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         return super.isApprovedForAll(owner, operator);
     }
 
-    function addToPreSaleAllowList(address[] calldata addresses) external onlyOwner {
+    function addToPreSaleAllowList(address[] calldata addresses)
+        external
+        onlyOwner
+    {
         for (uint256 i = 0; i < addresses.length; i++) {
             require(addresses[i] != address(0), "Can't add the null address");
 
@@ -256,7 +288,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
      */
     function mint(address to, uint256 count) public nonReentrant {
         // Only allow minters to bypass the payment
-        require(hasRole(MINTER_ROLE, msg.sender), "ERC721_COLLECTION/NOT_MINTER_ROLE");
+        require(
+            hasRole(MINTER_ROLE, msg.sender),
+            'ERC721_COLLECTION/NOT_MINTER_ROLE'
+        );
 
         // Make sure minting is allowed
         requireMintingConditions(to, count);
@@ -281,7 +316,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
     function purchase(uint256 count) public payable nonReentrant {
         // Caller cannot be a smart contract to avoid front-running by bots
         // Note this line rejects multi-sigs and contract-based wallets
-        require(!msg.sender.isContract(), 'ERC721_COLLECTION/CONTRACT_CANNOT_CALL');
+        require(
+            !msg.sender.isContract(),
+            'ERC721_COLLECTION/CONTRACT_CANNOT_CALL'
+        );
 
         // Minter must call directly not via a third-party
         // Note this line rejects multi-sigs and contract-based wallets
@@ -294,7 +332,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
         require(_isPurchaseEnabled, 'ERC721_COLLECTION/PURCHASE_DISABLED');
 
         // Sent value matches required ETH amount
-        require(PRICE * count <= msg.value, 'ERC721_COLLECTION/INSUFFICIENT_ETH_AMOUNT');
+        require(
+            PRICE * count <= msg.value,
+            'ERC721_COLLECTION/INSUFFICIENT_ETH_AMOUNT'
+        );
 
         if (_isPreSaleActive) {
             _preSaleAllowListClaimed[msg.sender] += count;
@@ -318,7 +359,10 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
     ) public virtual {
         for (uint256 i = 0; i < tokenIds.length; i++) {
             //solhint-disable-next-line max-line-length
-            require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
+            require(
+                _isApprovedOrOwner(_msgSender(), tokenIds[i]),
+                'ERC721: transfer caller is not owner nor approved'
+            );
             _transfer(from, to, tokenIds[i]);
         }
     }
@@ -336,26 +380,34 @@ contract ERC721Collection is ContextMixin, ERC721, NativeMetaTransaction, Ownabl
      */
     function requireMintingConditions(address to, uint256 count) internal view {
         require(
-        // Either public sale is active
+            // Either public sale is active
             _isPublicSaleActive ||
-
-            // Or, pre-sale is active AND address is allow-listed AND address have not minted more than max allowed
-            (
-            _isPreSaleActive &&
-            _preSaleAllowList[to] &&
-            _preSaleAllowListClaimed[to] + count <= MAX_PRE_SALE_MINT_PER_ADDRESS
-            )
-        , "ERC721_COLLECTION/CANNOT_MINT");
+                // Or, pre-sale is active AND address is allow-listed AND address have not minted more than max allowed
+                (_isPreSaleActive &&
+                    _preSaleAllowList[to] &&
+                    _preSaleAllowListClaimed[to] + count <=
+                    MAX_PRE_SALE_MINT_PER_ADDRESS),
+            'ERC721_COLLECTION/CANNOT_MINT'
+        );
 
         // If max-gas fee is configured (avoid gas wars), transaction must not exceed that
         if (MAX_ALLOWED_GAS_FEE > 0)
-            require(tx.gasprice < MAX_ALLOWED_GAS_FEE * 1000000000, "ERC721_COLLECTION/GAS_FEE_NOT_ALLOWED");
+            require(
+                tx.gasprice < MAX_ALLOWED_GAS_FEE * 1000000000,
+                'ERC721_COLLECTION/GAS_FEE_NOT_ALLOWED'
+            );
 
         // Total minted tokens must not exceed maximum supply
-        require(totalSupply() + count <= MAX_TOTAL_MINT, "ERC721_COLLECTION/EXCEEDS_MAX_SUPPLY");
+        require(
+            totalSupply() + count <= MAX_TOTAL_MINT,
+            'ERC721_COLLECTION/EXCEEDS_MAX_SUPPLY'
+        );
 
         // Number of minted tokens must not exceed maximum limit per transaction
-        require(count <= MAX_MINT_PER_TRANSACTION, "ERC721_COLLECTION/EXCEEDS_MAX_PER_TX");
+        require(
+            count <= MAX_MINT_PER_TRANSACTION,
+            'ERC721_COLLECTION/EXCEEDS_MAX_PER_TX'
+        );
     }
 
     /**

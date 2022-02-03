@@ -3,8 +3,11 @@
 pragma solidity 0.8.3;
 pragma abicoder v2;
 
-import "./LibPart.sol";
+import './LibPart.sol';
 
 interface IRoyalties {
-    function getRaribleV2Royalties(uint256 id) external view returns (LibPart.Part[] memory);
+    function getRaribleV2Royalties(uint256 id)
+        external
+        view
+        returns (LibPart.Part[] memory);
 }

@@ -2,14 +2,15 @@
 
 pragma solidity 0.8.3;
 
-import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
+import '@openzeppelin/contracts/utils/structs/BitMaps.sol';
 
-import "./ERC721Collection.sol";
+import './interfaces/StakableInterface.sol';
+import './ERC721Collection.sol';
 
-contract StakableERC721Collection is ERC721Collection {
+contract StakableERC721Collection is ERC721Collection, StakableInterface {
     using BitMaps for BitMaps.BitMap;
 
-    bytes32 public constant STAKER_ROLE = keccak256("STAKER_ROLE");
+    bytes32 public constant STAKER_ROLE = keccak256('STAKER_ROLE');
 
     BitMaps.BitMap internal stakedTokens;
 
@@ -25,7 +26,8 @@ contract StakableERC721Collection is ERC721Collection {
         string memory placeholderURI,
         address raribleRoyaltyAddress,
         address openSeaProxyRegistryAddress
-    ) ERC721Collection(
+    )
+    ERC721Collection(
         name,
         symbol,
         price,
@@ -37,17 +39,20 @@ contract StakableERC721Collection is ERC721Collection {
         placeholderURI,
         raribleRoyaltyAddress,
         openSeaProxyRegistryAddress
-    ) {
+    )
+    {
         _setupRole(STAKER_ROLE, _msgSender());
     }
-
 
     /**
      * Locks token(s) to effectively stake them, while keeping in the same wallet.
      * This mechanism prevents them from being transferred, yet still will show correct owner.
      */
-    function stake(uint256[] calldata tokenIds) public nonReentrant {
-        require(hasRole(STAKER_ROLE, msg.sender), "STAKABLE_ERC721/NOT_STAKER_ROLE");
+    function stake(uint256[] calldata tokenIds) override public nonReentrant {
+        require(
+            hasRole(STAKER_ROLE, msg.sender),
+            'STAKABLE_ERC721/NOT_STAKER_ROLE'
+        );
 
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _stake(tokenIds[i]);
@@ -60,37 +65,34 @@ contract StakableERC721Collection is ERC721Collection {
      * This is because in almost all cases you want another contract to perform custom logic on stake and unstake operations,
      * without allowing users to directly unstake their tokens and sell them, for example.
      */
-    function _stake(
-        uint256 tokenId
-    ) internal virtual {
-        require(!stakedTokens.get(tokenId), "STAKABLE_ERC721/ALREADY_STAKED");
+    function _stake(uint256 tokenId) internal virtual {
+        require(!stakedTokens.get(tokenId), 'STAKABLE_ERC721/ALREADY_STAKED');
         stakedTokens.set(tokenId);
     }
 
     /**
      * Unlocks staked token(s) to be able to transfer.
      */
-    function unstake(uint256[] calldata tokenIds) public nonReentrant {
-        require(hasRole(STAKER_ROLE, msg.sender), "STAKABLE_ERC721/NOT_STAKER_ROLE");
+    function unstake(uint256[] calldata tokenIds) override public nonReentrant {
+        require(
+            hasRole(STAKER_ROLE, msg.sender),
+            'STAKABLE_ERC721/NOT_STAKER_ROLE'
+        );
 
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _unstake(tokenIds[i]);
         }
     }
 
-    function _unstake(
-        uint256 tokenId
-    ) internal virtual {
-        require(stakedTokens.get(tokenId), "STAKABLE_ERC721/NOT_STAKED");
+    function _unstake(uint256 tokenId) internal virtual {
+        require(stakedTokens.get(tokenId), 'STAKABLE_ERC721/NOT_STAKED');
         stakedTokens.unset(tokenId);
     }
 
     /**
      * Returns if a token is staked or not.
      */
-    function isStaked(
-        uint256 tokenId
-    ) public view returns (bool) {
+    function isStaked(uint256 tokenId) override public view returns (bool) {
         return stakedTokens.get(tokenId);
     }
 
@@ -99,7 +101,7 @@ contract StakableERC721Collection is ERC721Collection {
         address to,
         uint256 tokenId
     ) internal virtual override(ERC721) {
-        require(!stakedTokens.get(tokenId), "STAKABLE_ERC721/TOKEN_STAKED");
+        require(!stakedTokens.get(tokenId), 'STAKABLE_ERC721/TOKEN_STAKED');
         super._beforeTokenTransfer(from, to, tokenId);
     }
 }

@@ -2,7 +2,7 @@
 
 pragma solidity 0.8.3;
 
-import "../ERC721Collection.sol";
+import '../ERC721Collection.sol';
 
 /**
  * You can add any customized method here or override existing methods.
@@ -20,17 +20,19 @@ contract SampleCreatures is ERC721Collection {
         string memory placeholderURI,
         address raribleRoyaltyAddress,
         address openSeaProxyRegistryAddress
-    ) ERC721Collection(
-        name,
-        symbol,
-        price,
-        maxTotalMint,
-        maxPreSaleMintPerAddress,
-        maxMintPerTransaction,
-        maxAllowedGasFee,
-        contractURI,
-        placeholderURI,
-        raribleRoyaltyAddress,
-        openSeaProxyRegistryAddress
-    ) {}
+    )
+        ERC721Collection(
+            name,
+            symbol,
+            price,
+            maxTotalMint,
+            maxPreSaleMintPerAddress,
+            maxMintPerTransaction,
+            maxAllowedGasFee,
+            contractURI,
+            placeholderURI,
+            raribleRoyaltyAddress,
+            openSeaProxyRegistryAddress
+        )
+    {}
 }
