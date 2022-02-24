@@ -27,19 +27,19 @@ contract StakableERC721Collection is ERC721Collection, StakableInterface {
         address raribleRoyaltyAddress,
         address openSeaProxyRegistryAddress
     )
-    ERC721Collection(
-        name,
-        symbol,
-        price,
-        maxTotalMint,
-        maxPreSaleMintPerAddress,
-        maxMintPerTransaction,
-        maxAllowedGasFee,
-        contractURI,
-        placeholderURI,
-        raribleRoyaltyAddress,
-        openSeaProxyRegistryAddress
-    )
+        ERC721Collection(
+            name,
+            symbol,
+            price,
+            maxTotalMint,
+            maxPreSaleMintPerAddress,
+            maxMintPerTransaction,
+            maxAllowedGasFee,
+            contractURI,
+            placeholderURI,
+            raribleRoyaltyAddress,
+            openSeaProxyRegistryAddress
+        )
     {
         _setupRole(STAKER_ROLE, _msgSender());
     }
@@ -48,20 +48,22 @@ contract StakableERC721Collection is ERC721Collection, StakableInterface {
      * @dev See {IERC165-supportsInterface}.
      */
     function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC721Collection)
-    returns (bool)
+        public
+        view
+        virtual
+        override(ERC721Collection)
+        returns (bool)
     {
-        return interfaceId == type(StakableInterface).interfaceId || super.supportsInterface(interfaceId);
+        return
+            interfaceId == type(StakableInterface).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 
     /**
      * Locks token(s) to effectively stake them, while keeping in the same wallet.
      * This mechanism prevents them from being transferred, yet still will show correct owner.
      */
-    function stake(uint256[] calldata tokenIds) override public nonReentrant {
+    function stake(uint256[] calldata tokenIds) public override nonReentrant {
         require(
             hasRole(STAKER_ROLE, msg.sender),
             'STAKABLE_ERC721/NOT_STAKER_ROLE'
@@ -86,7 +88,7 @@ contract StakableERC721Collection is ERC721Collection, StakableInterface {
     /**
      * Unlocks staked token(s) to be able to transfer.
      */
-    function unstake(uint256[] calldata tokenIds) override public nonReentrant {
+    function unstake(uint256[] calldata tokenIds) public override nonReentrant {
         require(
             hasRole(STAKER_ROLE, msg.sender),
             'STAKABLE_ERC721/NOT_STAKER_ROLE'
@@ -105,7 +107,7 @@ contract StakableERC721Collection is ERC721Collection, StakableInterface {
     /**
      * Returns if a token is staked or not.
      */
-    function isStaked(uint256 tokenId) override public view returns (bool) {
+    function isStaked(uint256 tokenId) public view override returns (bool) {
         return stakedTokens.get(tokenId);
     }
 

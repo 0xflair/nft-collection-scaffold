@@ -61,7 +61,9 @@ module.exports = async ({ getNamedAccounts, deployments, ethers }) => {
     );
   }
 
-  console.log(` - Allowing Flair to fund NFTs for this collection...`);
+  console.log(
+    ` - Allowing Flair to fund NFTs for this collection (proxy = ${deployerProxyAddress})...`,
+  );
   await deployments.execute(
     collectionConfig.contract,
     { from: deployer },
