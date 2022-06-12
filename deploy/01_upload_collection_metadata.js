@@ -6,6 +6,8 @@ const collectionConfig = require('../collection.config');
 
 const distDirectory = path.resolve(__dirname, '../dist');
 
+fs.mkdirSync(distDirectory, { recursive: true });
+
 const pinata = pinataSDK(
   collectionConfig.pinataApiKey,
   collectionConfig.pinataSecretKey,

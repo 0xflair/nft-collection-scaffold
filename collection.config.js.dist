@@ -1,41 +1,38 @@
 require('dotenv').config();
+
 const web3 = require('web3');
+const hre = require('hardhat');
+const { loadContract } = require('@0xflair/contracts-registry');
+const { FLAIR_OPENSEA_ADDRESSES } = require('@0xflair/react-nft-collections');
+
+const forwarderArtifact = loadContract(
+  'common/meta-transactions/UnorderedForwarder',
+  LATEST_VERSION,
+);
 
 module.exports = {
-  // Collection contract file
-  contract: 'SampleCreatures',
-
   // Name of the collection shown in EtherScan and OpenSea
-  name: 'MiniSea Creatures',
-
-  // Name of the collection shown in EtherScan and OpenSea
-  nftTitlePrefix: 'Mini Creature',
+  name: 'Flair Angels',
 
   // Description of collection stored in contract-level metadata shown in OpenSea
   description:
-    'A collection of 100 randomly generated sea creatures inspired by OpenSea Creatures art.',
+    'Angels will help bring Flair.Finance to life and make our decentralized world a safer place.',
 
   // Token tracker symbol shown in EtherScan
-  symbol: 'MSC',
+  symbol: 'ANGEL',
 
-  // Price of minting via Direct Purchase
-  price: web3.utils.toWei('0.08'), // ETH
+  // Price of minting
+  preSalePrice: web3.utils.toWei('0.06'), // 0.06 ETH
+  publicSalePrice: web3.utils.toWei('0.08'), // 0.08 ETH
 
   // Total number of tokens in your collection
-  maxTotalMint: 100,
+  maxSupply: 8000,
 
   // Number of pre-sale mints possible for each allow-listed address
-  maxPreSaleMintPerAddress: 2,
+  preSaleMaxMintPerWallet: 2,
 
   // Number of mints possible on each transaction
-  maxMintPerTransaction: 10,
-
-  // Maximum allowed gas fee to prevent gas wars in gwei (0 = disabled)
-  maxAllowedGasFee: 0,
-
-  // A random seed to always get the same collection (useful for gradual reveal)
-  // You can uncomment to one of resulting values from (generate-randomized-metadata.js) when you're happy with a specific seed.
-  // randomnessSeed: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  publicSaleMaxMintPerTx: 10,
 
   // Primary image of collection stored in contract-level metadata shown in OpenSea
   collectionImage: 'assets/contract/image.png',
@@ -46,16 +43,26 @@ module.exports = {
   // Website of collection stored in contract-level metadata shown in OpenSea
   externalLink: 'https://flair.finance',
 
-  // Royalty fee for secondary sales (on Rarible and OpenSea)
-  royaltyFee: 250, // Indicates a 2.5% seller fee.
+  // Royalty fee for secondary sales (on Rarible, OpenSea, LooksRare)
+  defaultRoyaltyBps: 500, // Indicates a 5% seller fee.
 
   // Receiver of the royalty fees
-  royaltyFeeRecipient: process.env.ROYALTY_FEE_RECIPIENT,
+  defaultRoyaltyAddress: '0xc997c206650cc62248a8514e2f60cbe29a24800f',
 
   // OpenSea registry address to avoid additional approval when collectors want to list on OS
-  //   - Registry address on Ethereum Mainnet: 0xa5409ec958c83c3f309868babaca7c86dcb077c1
-  //   - Registry address on Ethereum Rinkeby: 0xF57B2c51dED3A29e6891aba85459d600256Cf317
-  openseaRegistryAddress: process.env.OPENSEA_REGISTRY_ADDRESS,
+  openSeaProxyRegistryAddress: FLAIR_OPENSEA_ADDRESSES[
+    hre.network.config.chainId
+  ]
+    ? FLAIR_OPENSEA_ADDRESSES[hre.network.config.chainId].registryAddress
+    : '0x0',
+  openSeaExchangeAddress: FLAIR_OPENSEA_ADDRESSES[hre.network.config.chainId]
+    ? FLAIR_OPENSEA_ADDRESSES[hre.network.config.chainId].exchangeAddress
+    : '0x0',
+
+  // Address of the trusted forwarder contract when using meta-transactions (i.e. trustless minting from a backend API)
+  trustedForwarder: forwarderArtifact.address[hre.network.config.chainId]
+    ? forwarderArtifact.address[hre.network.config.chainId]
+    : '0x0',
 
   // Pinata API and Secret Keys to upload and pin metadata for NFTs and contract (you must edit .env file)
   pinataApiKey: process.env.PINATA_API_KEY,

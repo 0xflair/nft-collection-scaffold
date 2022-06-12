@@ -14,6 +14,7 @@
     "format:fix": "prettier --write \"**/*.{ts,js,sol}\"",
     "test": "npx hardhat test --network hardhat",
     "build": "npm run clean && npm run compile",
+    "deploy:mainnet": "npx hardhat deploy --network mainnet && npx hardhat etherscan-verify --network mainnet",
     "deploy:rinkeby": "npx hardhat deploy --network rinkeby && npx hardhat etherscan-verify --network rinkeby",
     "deploy:mumbai": "npx hardhat deploy --network mumbai && npx hardhat etherscan-verify --network mumbai",
     "deploy:matic": "npx hardhat deploy --network matic && npx hardhat etherscan-verify --network matic",
@@ -22,8 +23,13 @@
     "coverage": "npm run build && npx hardhat coverage --temp artifacts --network hardhat"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
-    "@nomiclabs/hardhat-etherscan": "^2.1.7",
+    "@0xflair/contracts-registry": "^0.56.3",
+    "@0xflair/evm-contracts": "^1.8.12",
+    "@0xflair/meta-transactions": "^0.56.3",
+    "@0xflair/react-nft-collections": "^0.56.3",
+    "@manifoldxyz/royalty-registry-solidity": "^1.0.9",
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
+    "@nomiclabs/hardhat-etherscan": "^2.1.8",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
     "@openzeppelin/contracts": "^4.3.2",
     "@pinata/sdk": "^1.1.23",
@@ -33,6 +39,7 @@
     "@types/node": "^16.9.1",
     "canvas": "^2.8.0",
     "chai": "^4.2.0",
+    "csv-parse": "^4.16.3",
     "dotenv": "^10.0.0",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
@@ -44,7 +51,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "ethereum-waffle": "^3.0.0",
-    "ethers": "^5.4.6",
+    "ethers": "^5.6.8",
     "hardhat": "^2.6.4",
     "hardhat-contract-sizer": "^2.1.0",
     "hardhat-deploy": "^0.9.1",
@@ -57,8 +64,5 @@
     "seedrandom": "^3.0.5",
     "solhint": "^3.3.6",
     "solidity-coverage": "^0.7.16"
-  },
-  "dependencies": {
-    "csv-parse": "^4.16.3"
   }
 }

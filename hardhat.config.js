@@ -24,7 +24,7 @@ const {
  */
 module.exports = {
   solidity: {
-    version: '0.8.3',
+    version: '0.8.9',
     settings: {
       optimizer: {
         enabled: true,
@@ -49,6 +49,7 @@ module.exports = {
       timeout: 1800000,
     },
     rinkeby: {
+      chainId: 4,
       url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
       network_id: '*',
       gasPrice: GAS_PRICE && parseInt(GAS_PRICE),
@@ -56,15 +57,16 @@ module.exports = {
         ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
         : {}),
     },
-    bsc_testnet: {
-      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+    bscTestnet: {
       chainId: 97,
+      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
       gasPrice: GAS_PRICE && parseInt(GAS_PRICE),
       ...(DEPLOYER_PRIVATE_KEY
         ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
         : {}),
     },
     mainnet: {
+      chainId: 1,
       url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
       network_id: '*',
       gasPrice: GAS_PRICE && parseInt(GAS_PRICE),
@@ -73,21 +75,30 @@ module.exports = {
         : {}),
     },
     matic: {
+      chainId: 137,
       url: `https://polygon-mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
       ...(DEPLOYER_PRIVATE_KEY
         ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
         : {}),
     },
     mumbai: {
+      chainId: 80001,
       // url: `https://polygon-mumbai.infura.io/v3/${INFURA_PROJECT_ID}`,
       url: `https://matic-mumbai.chainstacklabs.com/`,
       ...(DEPLOYER_PRIVATE_KEY
         ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
         : {}),
     },
-    arb_rinkeby: {
+    arbitrumOne: {
+      chainId: 42161,
+      url: 'https://arb1.arbitrum.io/rpc',
+      ...(DEPLOYER_PRIVATE_KEY
+        ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
+        : {}),
+    },
+    arbitrumTestnet: {
+      chainId: 421611,
       url: 'https://rinkeby.arbitrum.io/rpc',
-      gasPrice: 0,
       ...(DEPLOYER_PRIVATE_KEY
         ? { accounts: [`0x${DEPLOYER_PRIVATE_KEY}`] }
         : {}),

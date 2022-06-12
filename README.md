@@ -1,86 +1,54 @@
 # NFT Collection Scaffold
 Production-ready code for a rarity-based PFP (a.k.a 10k avatar) collection on Ethereum, Polygon (Matic), Binance Chain and any other EVM-compatible chain.
 
-You only need to provide your assets, rarity traits, then you're ready to launch your collection on mainnet!
+This repository is uses [OpenZeppelin](https://www.openzeppelin.com) and [Flair](https://flair.finance/) contracts.
 
 #### Current Features
-* Algorithm to **randomly generate static images** based on multiple asset groups (e.g. hats, faces, bodies etc.)
 * Ability to **reveal NFT metadata** after the mint, by uploading to IPFS.
 * Deploy **ready-made smart contracts** to mainnet with a simple command.
 * Ability to run pre-sales by allow-listing addresses.
 * Controllable pre-sale, public sale and direct purchase toggles.
 * Customizable maximum mints per transaction.
 * Customizable maximum pre-sale mints per address.
-* Guard against bots (malicious smart contracts) that try to front-run genuine collectors, using re-entrance checks and contract size.
 * No gas fee for when collectors want to "list" NFTs from this collection. 
-* Supports royalty for secondary sales on OpenSea and Rarible.
-* Ready to integrate with [Flair](https://flair.finance) to provide various funding options to collectors.
+* Supports royalty for secondary sales on OpenSea, LooksRare, Rarible, and EIP2981 etc.
 
 #### Stack
 * Solidity 0.8.x ([OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/))
 * Hardhat
 * TypeScript
 
-# Usage
+# :fire: Quick Start
 
-## 1. Clone this repo and prepare the configs
-* Copy the `.env.dist` file to a file named `.env`, and then edit it to fill in the details. Enter your Etherscan API key, your Infura Access Key, and the private key of the account which will send the deployment transaction.
-* Copy `collection.config.js.dist` to a file named `collection.config.js`, then update the details based on your collection info.
-* Copy `assets.dist` directory to a directory named `assets`, then add your own layers and collection image.
+If you want to create a new NFT Collection under 5 minutes, you can use Flair dashboard, which uses open-source smart contracts to deploy the contract for you, with your full ownership.
 
-## 2. Prepare your avatar assets, rarity traits and collection metadata
-TODO
+* Tutorial: [https://docs.flair.finance/tutorials/nft-sale](https://docs.flair.finance/tutorials/nft-sale)
+* Dashboard: [https://app.flair.finance](https://app.flair.finance)
 
-## 3. Deploy your smart contract
-TODO
+[![](./collection-public-sale.png)](https://flair.finance)
 
-#### 3.1 Create smart contracts
-TODO
+# 🧗 Deploying the Hard Way
 
-#### 3.2 EtherScan verification
+#### 1. Clone this repo
 
-```shell
-npx hardhat etherscan-verify --network rinkeby
+```sh
+git clone https://github.com/0xflair/nft-collection-scaffold.git
 ```
 
-## 4. Launch your project
-TODO
+#### 2. Create env variables
 
-## 4. Reveal metadata of the NFTs
-TODO
+Copy the `.env.dist` file to a file named `.env`, and then edit it to fill in the details. Enter your Etherscan API key, your Infura Access Key, and the private key of the account which will send the deployment transaction.
 
-# Blueprint
-To define your traits, their rarity, constraints and dependencies you need provide provide a blueprint in `blueprint.config.json`.
-You can copy a basic example from `blueprint.config.json.dist`.
+#### 3. Create collection configuration
 
-## Structure
-TODO: explain each property and supported capabilities of blueprint (settings, traits, variations, constraints).
+Copy `collection.config.js.dist` to a file named `collection.config.js`, then update the details based on your collection info, such as name, description, pre-reveal metadata and image.
 
-## Automatic Generation
-TODO: explain how to automatically generate a blueprint based on a specific convention on asset file names 
+#### 4. Deploy the contract using Hardhat
 
-# Best Practices
-Now that you have decided to launch an NFT-based avatar collection, we'd like to share a few ideas that can help you succeed:
+```sh
+# On testnet
+npm run deploy:rinkeby
 
-#### Design a fun and exciting rarity model
-TODO
-
-#### Provide a long-term utility for your community
-TODO
-
-#### Define royalties for sustainable business model
-TODO
-
-#### Avoid gas wars, flippers, paper hands and even whales!
-TODO
-
-# Use Cases
-
-### Art Studios
-TODO
-
-### Game Developers
-TODO
-
-### Metaverse Citizen
-TODO
+# Or mainnet
+npm run deploy:mainnet
+```
