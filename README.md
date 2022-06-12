@@ -52,3 +52,11 @@ npm run deploy:rinkeby
 # Or mainnet
 npm run deploy:mainnet
 ```
+
+## 😍 Are you looking for Staking?
+
+Flair has a tutorial to create a staking pool under 5 minutes, [check it out here](https://docs.flair.finance/tutorials/nft-staking)!
+
+[![](./staking-screenshot.png)](https://docs.flair.finance/tutorials/nft-staking)
+
+## :rocket: WAGMI
