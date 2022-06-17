@@ -1,4 +1,6 @@
 # NFT Collection Scaffold
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2F0xflair%2Fnft-collection-scaffold&via=https%3A%2F%2Ftwitter.com%2FFlairFinance&text=Production-ready%20%23NFT%20collection%20scaffold%20that%20will%20save%20you%20weeks%20of%20development%20work%20if%20launching%20an%20NFT%20project](https://github.com/0xflair/nft-collection-scaffold)) ![GitHub Repo stars](https://img.shields.io/github/stars/0xflair/nft-collection-scaffold?style=social)
+
 Production-ready code for a rarity-based PFP (a.k.a 10k avatar) collection on Ethereum, Polygon (Matic), Binance Chain and any other EVM-compatible chain.
 
 This repository is uses [OpenZeppelin](https://www.openzeppelin.com) and [Flair](https://flair.finance/) contracts.
